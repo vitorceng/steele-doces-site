@@ -94,6 +94,22 @@ ul{margin:0;padding:0;list-style:none}
   font-size:.92rem;color:#5E6753}
 .aviso strong{color:var(--brand);font-weight:500}
 
+/* as regras de entrega: o cliente precisa saber o frete ANTES de montar o pedido,
+   senao ele monta, pergunta no WhatsApp e desiste quando descobre a taxa. */
+.entrega{margin:14px auto 0;max-width:640px;border:1px solid var(--line);
+  background:var(--paper-2);padding:16px 20px;text-align:left;font-size:.92rem;color:#5E6753}
+.entrega-titulo{font-family:var(--body);font-weight:500;font-size:.70rem;letter-spacing:.22em;
+  text-transform:uppercase;color:var(--gold);margin-bottom:10px}
+.entrega-faixas{list-style:none;margin:0;padding:0}
+.entrega-faixas li{display:flex;flex-wrap:wrap;align-items:baseline;gap:8px;
+  padding:6px 0;border-bottom:1px dashed var(--line)}
+.entrega-faixas li:last-child{border-bottom:0}
+.entrega-faixas span{flex:1 0 108px}
+.entrega-faixas b{color:var(--brand);font-weight:500}
+.entrega-faixas em{font-style:normal;font-size:.84rem;opacity:.8}
+.entrega-nota{margin-top:12px;font-size:.88rem}
+.entrega-nota strong{color:var(--brand);font-weight:500}
+
 /* ---------- abas das seções ---------- */
 .abas{position:sticky;top:var(--barra-altura);z-index:50;
   background:rgba(251,245,236,.975);backdrop-filter:blur(12px);
@@ -199,6 +215,17 @@ main{padding:0 var(--gut) clamp(50px,8vh,90px)}
     <p><strong>Estes são os preços de venda direta.</strong> Nos aplicativos o valor é mais alto
       por causa das taxas da plataforma. Pedindo no WhatsApp você paga o preço desta página.</p>
   </div>
+  <div class="entrega">
+    <p class="entrega-titulo">Entrega</p>
+    <ul class="entrega-faixas">
+      <li><span>até 3 km</span><b>grátis</b></li>
+      <li><span>3 a 6 km</span><b>R$ 5,00</b><em>grátis acima de R$ 60</em></li>
+      <li><span>6 a 10 km</span><b>R$ 10,00</b><em>grátis acima de R$ 80</em></li>
+      <li><span>acima de 10 km</span><b>a combinar no WhatsApp</b></li>
+    </ul>
+    <p class="entrega-nota"><strong>Pedido mínimo de R$ 30 para entrega</strong> — o Trio de cookies
+      já fecha. Abaixo disso, retirada na loja.</p>
+  </div>
   <div class="capa-acoes">
     <a class="btn" href="https://wa.me/5562986445333?text=Oi!%20Vim%20pelo%20card%C3%A1pio%20do%20site%20e%20quero%20pedir%20cookies." target="_blank" rel="noopener">Pedir no WhatsApp</a>
     <a class="btn btn-ghost" href="index.html">Voltar ao site</a>
@@ -211,6 +238,7 @@ main{padding:0 var(--gut) clamp(50px,8vh,90px)}
     <a href="#gourmets">Gourmets</a>
     <a href="#cup">CupCookies</a>
     <a href="#bolos">Bolos individuais</a>
+    <a href="#salgados">Salgados</a>
     <a href="#bebidas">Bebidas</a>
 </nav>
 
@@ -313,7 +341,7 @@ main{padding:0 var(--gut) clamp(50px,8vh,90px)}
         <p>Cacau preto, creme e Oreo por dentro e por cima.</p>
       </div>
       <div class="it-dir">
-        <span class="it-preco">R$ 17,00</span>
+        <span class="it-preco">R$ 18,00</span>
         <a class="it-pedir" href="https://wa.me/5562986445333?text=Oi!%20Vim%20pelo%20card%C3%A1pio%20do%20site%20e%20quero%201%20Black%20Oreo." target="_blank" rel="noopener">pedir</a>
       </div>
     </li>
@@ -324,7 +352,7 @@ main{padding:0 var(--gut) clamp(50px,8vh,90px)}
         <p>Coco e amêndoa, com chocolate branco cremoso no centro.</p>
       </div>
       <div class="it-dir">
-        <span class="it-preco">R$ 21,00</span>
+        <span class="it-preco">R$ 24,00</span>
         <a class="it-pedir" href="https://wa.me/5562986445333?text=Oi!%20Vim%20pelo%20card%C3%A1pio%20do%20site%20e%20quero%201%20Raffaello." target="_blank" rel="noopener">pedir</a>
       </div>
     </li>
@@ -346,7 +374,7 @@ main{padding:0 var(--gut) clamp(50px,8vh,90px)}
         <p>Massa black com gotas de chocolate branco e recheio cremoso.</p>
       </div>
       <div class="it-dir">
-        <span class="it-preco">R$ 26,00</span>
+        <span class="it-preco">R$ 29,00</span>
         <a class="it-pedir" href="https://wa.me/5562986445333?text=Oi!%20Vim%20pelo%20card%C3%A1pio%20do%20site%20e%20quero%201%20Alpino%20Black." target="_blank" rel="noopener">pedir</a>
       </div>
     </li>
@@ -362,14 +390,14 @@ main{padding:0 var(--gut) clamp(50px,8vh,90px)}
     <li class="it it-simples">
       <div class="it-txt"><h3>Tradicional com Nutella</h3></div>
       <div class="it-dir">
-        <span class="it-preco">R$ 35,00</span>
+        <span class="it-preco">R$ 37,00</span>
         <a class="it-pedir" href="https://wa.me/5562986445333?text=Oi!%20Vim%20pelo%20card%C3%A1pio%20do%20site%20e%20quero%201%20Tradicional%20com%20Nutella." target="_blank" rel="noopener">pedir</a>
       </div>
     </li>
     <li class="it it-simples">
       <div class="it-txt"><h3>Tradicional com pistache</h3></div>
       <div class="it-dir">
-        <span class="it-preco">R$ 37,00</span>
+        <span class="it-preco">R$ 39,00</span>
         <a class="it-pedir" href="https://wa.me/5562986445333?text=Oi!%20Vim%20pelo%20card%C3%A1pio%20do%20site%20e%20quero%201%20Tradicional%20com%20pistache." target="_blank" rel="noopener">pedir</a>
       </div>
     </li>
@@ -391,8 +419,24 @@ main{padding:0 var(--gut) clamp(50px,8vh,90px)}
     <li class="it it-simples">
       <div class="it-txt"><h3>Ferrero Rocher</h3></div>
       <div class="it-dir">
-        <span class="it-preco">R$ 29,00</span>
+        <span class="it-preco">R$ 31,00</span>
         <a class="it-pedir" href="https://wa.me/5562986445333?text=Oi!%20Vim%20pelo%20card%C3%A1pio%20do%20site%20e%20quero%201%20Ferrero%20Rocher." target="_blank" rel="noopener">pedir</a>
+      </div>
+    </li>
+    </ul>
+  </section>
+
+  <section class="grupo grupo-curto" id="salgados" aria-labelledby="h-salgados">
+    <div class="grupo-topo">
+      <h2 id="h-salgados">Salgados</h2>
+      <p class="grupo-nota">Para quebrar o doce. Vão ao forno junto com os cookies.</p>
+    </div>
+    <ul class="lista">
+    <li class="it it-simples">
+      <div class="it-txt"><h3>Trio de biscoitos de queijo</h3></div>
+      <div class="it-dir">
+        <span class="it-preco">R$ 15,00</span>
+        <a class="it-pedir" href="https://wa.me/5562986445333?text=Oi!%20Vim%20pelo%20card%C3%A1pio%20do%20site%20e%20quero%201%20Trio%20de%20biscoitos%20de%20queijo." target="_blank" rel="noopener">pedir</a>
       </div>
     </li>
     </ul>

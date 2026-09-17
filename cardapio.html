@@ -1,0 +1,521 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Cardápio | Steele Doces</title>
+<meta name="description" content="Cardápio completo da Steele Doces com os preços de venda direta: nove cookies artesanais, recheados e gourmets, CupCookies, bolos individuais e bebidas. Peça no WhatsApp.">
+<meta name="theme-color" content="#FBF5EC">
+<link rel="icon" type="image/png" sizes="32x32" href="assets/icone-32.png">
+<link rel="icon" type="image/png" sizes="192x192" href="assets/icone-192.png">
+<link rel="apple-touch-icon" href="assets/icone-180.png">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,600;1,500&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
+
+<style>
+:root{
+  --paper:#FBF5EC;
+  --paper-2:#F3EBDD;
+  --ink:#333D28;
+  --brand:#4A5539;
+  --brand-dark:#3A4430;
+  --gold:#8F6727;
+  --muted:#6A7360;
+  --line:rgba(74,85,57,.20);
+  --line-2:rgba(74,85,57,.38);
+
+  --display:"Playfair Display",Georgia,"Times New Roman",serif;
+  --body:"Jost",-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+
+  --ease:cubic-bezier(.22,.61,.36,1);
+  --gut:clamp(20px,5vw,84px);
+  --barra-altura:79px;
+  --topo-altura:127px;
+}
+
+*,*::before,*::after{box-sizing:border-box}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+body{
+  margin:0;background:var(--paper);color:var(--ink);
+  font-family:var(--body);font-weight:300;
+  font-size:clamp(15.5px,1vw,17px);line-height:1.66;
+  -webkit-font-smoothing:antialiased;
+}
+/* height:auto é obrigatório: sem ele o atributo height do HTML vira altura fixa
+   e qualquer imagem com largura em CSS estica na vertical. */
+img{max-width:100%;display:block;height:auto}
+a{color:inherit}
+h1,h2,h3{font-family:var(--display);font-weight:500;line-height:1.16;margin:0;color:var(--brand)}
+p{margin:0}
+ul{margin:0;padding:0;list-style:none}
+::selection{background:var(--brand);color:var(--paper)}
+
+.skip{position:absolute;left:-9999px;top:0;z-index:200;background:var(--brand);color:var(--paper);
+  padding:12px 18px;border-radius:0 0 8px 0;font-weight:500}
+.skip:focus{left:0}
+:focus-visible{outline:2px solid var(--gold);outline-offset:3px;border-radius:3px}
+
+.kicker{font-family:var(--body);font-weight:500;font-size:.70rem;letter-spacing:.30em;
+  text-transform:uppercase;color:var(--gold);margin-bottom:14px}
+.wrap{max-width:900px;margin-inline:auto}
+
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;
+  font-family:var(--body);font-weight:500;font-size:.94rem;
+  padding:15px 30px;border-radius:2px;border:1px solid var(--brand);
+  background:var(--brand);color:var(--paper);text-decoration:none;cursor:pointer;
+  transition:background .3s var(--ease),border-color .3s var(--ease)}
+.btn:hover{background:var(--brand-dark);border-color:var(--brand-dark)}
+.btn-ghost{background:transparent;color:var(--brand);border-color:var(--line-2)}
+.btn-ghost:hover{background:rgba(74,85,57,.07);border-color:var(--brand)}
+@media (pointer:coarse){.btn{min-height:48px}}
+
+/* ---------- barra fixa ---------- */
+.barra{position:sticky;top:0;z-index:60;display:flex;align-items:center;
+  justify-content:space-between;gap:16px;padding:10px var(--gut);
+  background:rgba(251,245,236,.975);backdrop-filter:blur(12px);
+  border-bottom:1px solid var(--line)}
+.barra img{width:92px}
+.barra .btn{padding:10px 20px;font-size:.86rem}
+
+/* ---------- capa curta ---------- */
+.capa{padding:clamp(40px,8vh,84px) var(--gut) clamp(26px,4vh,40px);text-align:center}
+.capa h1{font-size:clamp(2.1rem,5.4vw,3.4rem)}
+.capa-sub{color:var(--muted);max-width:52ch;margin:18px auto 0}
+.capa-acoes{display:flex;flex-wrap:wrap;gap:12px;justify-content:center;margin-top:26px}
+
+/* o aviso de preço é o motivo de a pessoa pedir aqui em vez do aplicativo:
+   fica logo abaixo do título, antes de qualquer item. */
+.aviso{margin:clamp(22px,4vh,34px) auto 0;max-width:640px;
+  border:1px solid var(--line);border-left:3px solid var(--gold);
+  background:var(--paper-2);padding:16px 20px;text-align:left;
+  /* var(--muted) da 4,19:1 sobre este creme mais escuro; este verde da 5,0:1 */
+  font-size:.92rem;color:#5E6753}
+.aviso strong{color:var(--brand);font-weight:500}
+
+/* ---------- abas das seções ---------- */
+.abas{position:sticky;top:var(--barra-altura);z-index:50;
+  background:rgba(251,245,236,.975);backdrop-filter:blur(12px);
+  border-bottom:1px solid var(--line);
+  display:flex;gap:clamp(14px,2.4vw,30px);
+  padding:6px var(--gut);overflow-x:auto;
+  scrollbar-width:none}
+.abas::-webkit-scrollbar{display:none}
+.abas a{white-space:nowrap;text-decoration:none;color:var(--muted);
+  font-size:.80rem;letter-spacing:.14em;text-transform:uppercase;font-weight:400;
+  padding:6px 0;border-bottom:1px solid transparent;
+  transition:color .3s var(--ease),border-color .3s var(--ease)}
+.abas a:hover,.abas a.aqui{color:var(--brand);border-color:var(--gold)}
+
+/* ---------- grupos e itens ---------- */
+main{padding:0 var(--gut) clamp(50px,8vh,90px)}
+.grupo{max-width:900px;margin:clamp(40px,7vh,78px) auto 0;
+  scroll-margin-top:calc(var(--topo-altura) + 16px)}
+.grupo-topo{padding-bottom:18px;border-bottom:1px solid var(--line-2)}
+.grupo-topo h2{font-size:clamp(1.5rem,3.2vw,2.05rem)}
+.grupo-nota{color:var(--muted);font-size:.95rem;margin-top:8px;max-width:56ch}
+
+.it{display:grid;grid-template-columns:96px 1fr auto;gap:clamp(14px,2.2vw,26px);
+  align-items:center;padding:20px 0;border-bottom:1px solid var(--line)}
+.it-foto{width:96px;height:96px;object-fit:contain;object-position:center}
+.it-foto-vazia{width:96px;height:96px;display:block}
+.it-txt h3{font-size:1.12rem}
+.it-txt p{color:var(--muted);font-size:.92rem;margin-top:4px}
+.it-dir{display:flex;flex-direction:column;align-items:flex-end;gap:6px}
+.it-preco{font-family:var(--display);font-size:1.12rem;color:var(--brand);white-space:nowrap}
+.it-pedir{font-size:.74rem;letter-spacing:.16em;text-transform:uppercase;
+  color:var(--gold);text-decoration:none;border-bottom:1px solid transparent;
+  transition:border-color .3s var(--ease)}
+.it-pedir:hover{border-color:var(--gold)}
+/* no celular o "pedir" precisa de altura de dedo; a borda continua colada no texto
+   porque o que cresce e a caixa do link, nao o sublinhado. */
+@media (pointer:coarse){
+  .it-pedir{min-height:44px;display:inline-flex;align-items:center;padding-inline:10px;margin-right:-10px}
+  .it-dir{gap:0}
+}
+
+/* nas listas sem foto a primeira coluna sai do grid, senão sobra um buraco
+   do tamanho da miniatura na frente de cada bebida. */
+.grupo-curto .it{grid-template-columns:1fr auto}
+
+@media (max-width:600px){
+  .it{grid-template-columns:72px 1fr auto;gap:14px;padding:16px 0}
+  .it-foto,.it-foto-vazia{width:72px;height:72px}
+  .it-txt h3{font-size:1.02rem}
+  .it-txt p{font-size:.86rem}
+  .it-preco{font-size:1rem}
+}
+
+/* ---------- fechamento ---------- */
+.fecho{max-width:900px;margin:clamp(46px,8vh,84px) auto 0;padding-top:clamp(36px,6vh,56px);
+  border-top:1px solid var(--line-2);text-align:center}
+.fecho h2{font-size:clamp(1.5rem,3.4vw,2.1rem)}
+.fecho p{color:var(--muted);margin-top:14px;max-width:48ch;margin-inline:auto}
+.fecho .capa-acoes{margin-top:24px}
+
+/* ---------- rodapé ---------- */
+.rodape{padding:clamp(36px,6vh,60px) var(--gut) 34px;border-top:1px solid var(--line)}
+.rodape-topo{display:flex;justify-content:space-between;align-items:flex-start;gap:28px;flex-wrap:wrap;
+  max-width:900px;margin-inline:auto}
+.rodape img{width:112px}
+.rodape-links{display:flex;gap:20px;flex-wrap:wrap}
+.rodape-links a{font-size:.88rem;color:var(--muted);text-decoration:none;transition:color .3s var(--ease)}
+.rodape-links a:hover{color:var(--brand)}
+.rodape-nota{max-width:900px;margin:28px auto 0;padding-top:20px;border-top:1px solid var(--line);
+  font-size:.82rem;color:var(--muted)}
+
+/* ---------- impressão ----------
+   quem quiser papel imprime esta mesma página; era isso que o PDF resolvia. */
+@media print{
+  .barra,.abas,.capa-acoes,.it-pedir,.fecho,.skip{display:none !important}
+  body{background:#fff;font-size:11pt}
+  .grupo{margin-top:22px;break-inside:avoid}
+  .it{padding:9px 0;break-inside:avoid}
+  .aviso{background:#fff}
+  a[href]::after{content:""}
+}
+
+@media (prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  *{transition:none !important}
+}
+</style>
+</head>
+<body>
+<a class="skip" href="#main">Pular para o cardápio</a>
+
+<div class="barra" id="barra">
+  <a href="index.html" aria-label="Steele Doces, início"><img src="assets/logo-escuro.webp" alt="Steele Doces" width="560" height="356"></a>
+  <a class="btn" href="https://wa.me/5562986445333?text=Oi!%20Vim%20pelo%20card%C3%A1pio%20do%20site%20e%20quero%20pedir%20cookies." target="_blank" rel="noopener">Pedir no WhatsApp</a>
+</div>
+
+<header class="capa">
+  <p class="kicker">Cardápio</p>
+  <h1>Tudo o que sai do forno.</h1>
+  <p class="capa-sub">Os cookies são assados depois que você pede. Escolha aqui e mande a mensagem:
+    a gente confirma o tempo e o valor da entrega na hora.</p>
+  <div class="aviso">
+    <p><strong>Estes são os preços de venda direta.</strong> Nos aplicativos o valor é mais alto
+      por causa das taxas da plataforma. Pedindo no WhatsApp você paga o preço desta página.</p>
+  </div>
+  <div class="capa-acoes">
+    <a class="btn" href="https://wa.me/5562986445333?text=Oi!%20Vim%20pelo%20card%C3%A1pio%20do%20site%20e%20quero%20pedir%20cookies." target="_blank" rel="noopener">Pedir no WhatsApp</a>
+    <a class="btn btn-ghost" href="index.html">Voltar ao site</a>
+  </div>
+</header>
+
+<nav class="abas" id="abas" aria-label="Seções do cardápio">
+    <a href="#artesanais">Artesanais</a>
+    <a href="#recheados">Recheados</a>
+    <a href="#gourmets">Gourmets</a>
+    <a href="#cup">CupCookies</a>
+    <a href="#bolos">Bolos individuais</a>
+    <a href="#bebidas">Bebidas</a>
+</nav>
+
+<main id="main" tabindex="-1">
+
+  <section class="grupo" id="artesanais" aria-labelledby="h-artesanais">
+    <div class="grupo-topo">
+      <h2 id="h-artesanais">Cookies artesanais</h2>
+      <p class="grupo-nota">Massa de sempre, gotas de chocolate de verdade. É por aqui que começa quem nunca provou.</p>
+    </div>
+    <ul class="lista">
+    <li class="it">
+      <img class="it-foto" src="assets/sabores/tradicional.webp" alt="Cookie tradicional partido, com gotas de chocolate" width="264" height="264" loading="lazy" decoding="async">
+      <div class="it-txt">
+        <h3>Tradicional</h3>
+        <p>Massa amanteigada com gotas generosas. O ponto de referência da casa.</p>
+      </div>
+      <div class="it-dir">
+        <span class="it-preco">R$ 10,00</span>
+        <a class="it-pedir" href="https://wa.me/5562986445333?text=Oi!%20Vim%20pelo%20card%C3%A1pio%20do%20site%20e%20quero%201%20Tradicional." target="_blank" rel="noopener">pedir</a>
+      </div>
+    </li>
+    <li class="it">
+      <img class="it-foto" src="assets/sabores/cafe.webp" alt="Cookie de chocolate com café" width="264" height="264" loading="lazy" decoding="async">
+      <div class="it-txt">
+        <h3>Chocolate com café</h3>
+        <p>Cacau meio amargo com café na massa. Menos doce, mais fundo.</p>
+      </div>
+      <div class="it-dir">
+        <span class="it-preco">R$ 11,00</span>
+        <a class="it-pedir" href="https://wa.me/5562986445333?text=Oi!%20Vim%20pelo%20card%C3%A1pio%20do%20site%20e%20quero%201%20Chocolate%20com%20caf%C3%A9." target="_blank" rel="noopener">pedir</a>
+      </div>
+    </li>
+    <li class="it">
+      <img class="it-foto" src="assets/sabores/redvelvet.webp" alt="Três cookies red velvet empilhados" width="264" height="264" loading="lazy" decoding="async">
+      <div class="it-txt">
+        <h3>Red velvet</h3>
+        <p>Massa aveludada com chocolate branco. Doçura curta, cor inteira.</p>
+      </div>
+      <div class="it-dir">
+        <span class="it-preco">R$ 12,00</span>
+        <a class="it-pedir" href="https://wa.me/5562986445333?text=Oi!%20Vim%20pelo%20card%C3%A1pio%20do%20site%20e%20quero%201%20Red%20velvet." target="_blank" rel="noopener">pedir</a>
+      </div>
+    </li>
+    <li class="it">
+      <span class="it-foto it-foto-vazia" aria-hidden="true"></span>
+      <div class="it-txt">
+        <h3>Trio de cookies</h3>
+        <p>Três artesanais à sua escolha, na caixa.</p>
+      </div>
+      <div class="it-dir">
+        <span class="it-preco">R$ 30,00</span>
+        <a class="it-pedir" href="https://wa.me/5562986445333?text=Oi!%20Vim%20pelo%20card%C3%A1pio%20do%20site%20e%20quero%201%20Trio%20de%20cookies." target="_blank" rel="noopener">pedir</a>
+      </div>
+    </li>
+    </ul>
+  </section>
+
+  <section class="grupo" id="recheados" aria-labelledby="h-recheados">
+    <div class="grupo-topo">
+      <h2 id="h-recheados">Cookies recheados</h2>
+      <p class="grupo-nota">A massa segura o recheio quente sem virar sobremesa de colher.</p>
+    </div>
+    <ul class="lista">
+    <li class="it">
+      <img class="it-foto" src="assets/sabores/nutella.webp" alt="Cookie black Nutella partido ao meio" width="264" height="264" loading="lazy" decoding="async">
+      <div class="it-txt">
+        <h3>Black Nutella</h3>
+        <p>Massa de cacau preto, Nutella escorrendo no meio.</p>
+      </div>
+      <div class="it-dir">
+        <span class="it-preco">R$ 21,00</span>
+        <a class="it-pedir" href="https://wa.me/5562986445333?text=Oi!%20Vim%20pelo%20card%C3%A1pio%20do%20site%20e%20quero%201%20Black%20Nutella." target="_blank" rel="noopener">pedir</a>
+      </div>
+    </li>
+    <li class="it">
+      <img class="it-foto" src="assets/sabores/brookie.webp" alt="Cookie brookie partido, com brownie dentro" width="264" height="264" loading="lazy" decoding="async">
+      <div class="it-txt">
+        <h3>Brookie</h3>
+        <p>Cookie e brownie na mesma mordida. O recheio é brownie de verdade.</p>
+      </div>
+      <div class="it-dir">
+        <span class="it-preco">R$ 26,00</span>
+        <a class="it-pedir" href="https://wa.me/5562986445333?text=Oi!%20Vim%20pelo%20card%C3%A1pio%20do%20site%20e%20quero%201%20Brookie." target="_blank" rel="noopener">pedir</a>
+      </div>
+    </li>
+    </ul>
+  </section>
+
+  <section class="grupo" id="gourmets" aria-labelledby="h-gourmets">
+    <div class="grupo-topo">
+      <h2 id="h-gourmets">Cookies gourmets</h2>
+      <p class="grupo-nota">Os que levam bombom inteiro, coco fresco ou Oreo dentro da massa.</p>
+    </div>
+    <ul class="lista">
+    <li class="it">
+      <img class="it-foto" src="assets/sabores/oreo.webp" alt="Cookie black Oreo com biscoito por cima" width="264" height="264" loading="lazy" decoding="async">
+      <div class="it-txt">
+        <h3>Black Oreo</h3>
+        <p>Cacau preto, creme e Oreo por dentro e por cima.</p>
+      </div>
+      <div class="it-dir">
+        <span class="it-preco">R$ 17,00</span>
+        <a class="it-pedir" href="https://wa.me/5562986445333?text=Oi!%20Vim%20pelo%20card%C3%A1pio%20do%20site%20e%20quero%201%20Black%20Oreo." target="_blank" rel="noopener">pedir</a>
+      </div>
+    </li>
+    <li class="it">
+      <img class="it-foto" src="assets/sabores/raffaello.webp" alt="Cookie Raffaello partido, recheio de coco" width="264" height="264" loading="lazy" decoding="async">
+      <div class="it-txt">
+        <h3>Raffaello</h3>
+        <p>Coco e amêndoa, com chocolate branco cremoso no centro.</p>
+      </div>
+      <div class="it-dir">
+        <span class="it-preco">R$ 21,00</span>
+        <a class="it-pedir" href="https://wa.me/5562986445333?text=Oi!%20Vim%20pelo%20card%C3%A1pio%20do%20site%20e%20quero%201%20Raffaello." target="_blank" rel="noopener">pedir</a>
+      </div>
+    </li>
+    <li class="it">
+      <img class="it-foto" src="assets/sabores/ferrero.webp" alt="Cookie Ferrero Rocher com o bombom dentro" width="264" height="264" loading="lazy" decoding="async">
+      <div class="it-txt">
+        <h3>Ferrero Rocher</h3>
+        <p>O bombom inteiro dentro da massa de chocolate, com avelã triturada.</p>
+      </div>
+      <div class="it-dir">
+        <span class="it-preco">R$ 25,00</span>
+        <a class="it-pedir" href="https://wa.me/5562986445333?text=Oi!%20Vim%20pelo%20card%C3%A1pio%20do%20site%20e%20quero%201%20Ferrero%20Rocher." target="_blank" rel="noopener">pedir</a>
+      </div>
+    </li>
+    <li class="it">
+      <img class="it-foto" src="assets/sabores/alpino.webp" alt="Cookie Alpino Black partido ao meio" width="264" height="264" loading="lazy" decoding="async">
+      <div class="it-txt">
+        <h3>Alpino Black</h3>
+        <p>Massa black com gotas de chocolate branco e recheio cremoso.</p>
+      </div>
+      <div class="it-dir">
+        <span class="it-preco">R$ 26,00</span>
+        <a class="it-pedir" href="https://wa.me/5562986445333?text=Oi!%20Vim%20pelo%20card%C3%A1pio%20do%20site%20e%20quero%201%20Alpino%20Black." target="_blank" rel="noopener">pedir</a>
+      </div>
+    </li>
+    </ul>
+  </section>
+
+  <section class="grupo grupo-curto" id="cup" aria-labelledby="h-cup">
+    <div class="grupo-topo">
+      <h2 id="h-cup">CupCookies</h2>
+      <p class="grupo-nota">Dez mini cookies no copo. Vai bem como presente.</p>
+    </div>
+    <ul class="lista">
+    <li class="it it-simples">
+      <div class="it-txt"><h3>Tradicional com Nutella</h3></div>
+      <div class="it-dir">
+        <span class="it-preco">R$ 35,00</span>
+        <a class="it-pedir" href="https://wa.me/5562986445333?text=Oi!%20Vim%20pelo%20card%C3%A1pio%20do%20site%20e%20quero%201%20Tradicional%20com%20Nutella." target="_blank" rel="noopener">pedir</a>
+      </div>
+    </li>
+    <li class="it it-simples">
+      <div class="it-txt"><h3>Tradicional com pistache</h3></div>
+      <div class="it-dir">
+        <span class="it-preco">R$ 37,00</span>
+        <a class="it-pedir" href="https://wa.me/5562986445333?text=Oi!%20Vim%20pelo%20card%C3%A1pio%20do%20site%20e%20quero%201%20Tradicional%20com%20pistache." target="_blank" rel="noopener">pedir</a>
+      </div>
+    </li>
+    </ul>
+  </section>
+
+  <section class="grupo grupo-curto" id="bolos" aria-labelledby="h-bolos">
+    <div class="grupo-topo">
+      <h2 id="h-bolos">Bolos individuais</h2>
+    </div>
+    <ul class="lista">
+    <li class="it it-simples">
+      <div class="it-txt"><h3>Cenoura com ganache</h3></div>
+      <div class="it-dir">
+        <span class="it-preco">R$ 16,00</span>
+        <a class="it-pedir" href="https://wa.me/5562986445333?text=Oi!%20Vim%20pelo%20card%C3%A1pio%20do%20site%20e%20quero%201%20Cenoura%20com%20ganache." target="_blank" rel="noopener">pedir</a>
+      </div>
+    </li>
+    <li class="it it-simples">
+      <div class="it-txt"><h3>Ferrero Rocher</h3></div>
+      <div class="it-dir">
+        <span class="it-preco">R$ 29,00</span>
+        <a class="it-pedir" href="https://wa.me/5562986445333?text=Oi!%20Vim%20pelo%20card%C3%A1pio%20do%20site%20e%20quero%201%20Ferrero%20Rocher." target="_blank" rel="noopener">pedir</a>
+      </div>
+    </li>
+    </ul>
+  </section>
+
+  <section class="grupo grupo-curto" id="bebidas" aria-labelledby="h-bebidas">
+    <div class="grupo-topo">
+      <h2 id="h-bebidas">Bebidas</h2>
+    </div>
+    <ul class="lista">
+    <li class="it it-simples">
+      <div class="it-txt"><h3>Coca-Cola lata 350 ml</h3></div>
+      <div class="it-dir">
+        <span class="it-preco">R$ 8,90</span>
+        <a class="it-pedir" href="https://wa.me/5562986445333?text=Oi!%20Vim%20pelo%20card%C3%A1pio%20do%20site%20e%20quero%201%20Coca-Cola%20lata%20350%20ml." target="_blank" rel="noopener">pedir</a>
+      </div>
+    </li>
+    <li class="it it-simples">
+      <div class="it-txt"><h3>Coca-Cola Zero lata 350 ml</h3></div>
+      <div class="it-dir">
+        <span class="it-preco">R$ 8,90</span>
+        <a class="it-pedir" href="https://wa.me/5562986445333?text=Oi!%20Vim%20pelo%20card%C3%A1pio%20do%20site%20e%20quero%201%20Coca-Cola%20Zero%20lata%20350%20ml." target="_blank" rel="noopener">pedir</a>
+      </div>
+    </li>
+    <li class="it it-simples">
+      <div class="it-txt"><h3>Guaraná Antarctica lata 350 ml</h3></div>
+      <div class="it-dir">
+        <span class="it-preco">R$ 7,90</span>
+        <a class="it-pedir" href="https://wa.me/5562986445333?text=Oi!%20Vim%20pelo%20card%C3%A1pio%20do%20site%20e%20quero%201%20Guaran%C3%A1%20Antarctica%20lata%20350%20ml." target="_blank" rel="noopener">pedir</a>
+      </div>
+    </li>
+    <li class="it it-simples">
+      <div class="it-txt"><h3>Água mineral com gás 500 ml</h3></div>
+      <div class="it-dir">
+        <span class="it-preco">R$ 5,90</span>
+        <a class="it-pedir" href="https://wa.me/5562986445333?text=Oi!%20Vim%20pelo%20card%C3%A1pio%20do%20site%20e%20quero%201%20%C3%81gua%20mineral%20com%20g%C3%A1s%20500%20ml." target="_blank" rel="noopener">pedir</a>
+      </div>
+    </li>
+    <li class="it it-simples">
+      <div class="it-txt"><h3>Água mineral sem gás 500 ml</h3></div>
+      <div class="it-dir">
+        <span class="it-preco">R$ 4,90</span>
+        <a class="it-pedir" href="https://wa.me/5562986445333?text=Oi!%20Vim%20pelo%20card%C3%A1pio%20do%20site%20e%20quero%201%20%C3%81gua%20mineral%20sem%20g%C3%A1s%20500%20ml." target="_blank" rel="noopener">pedir</a>
+      </div>
+    </li>
+    <li class="it it-simples">
+      <div class="it-txt"><h3>Suco Del Valle maracujá 290 ml</h3></div>
+      <div class="it-dir">
+        <span class="it-preco">R$ 9,90</span>
+        <a class="it-pedir" href="https://wa.me/5562986445333?text=Oi!%20Vim%20pelo%20card%C3%A1pio%20do%20site%20e%20quero%201%20Suco%20Del%20Valle%20maracuj%C3%A1%20290%20ml." target="_blank" rel="noopener">pedir</a>
+      </div>
+    </li>
+    <li class="it it-simples">
+      <div class="it-txt"><h3>Suco Del Valle uva 290 ml</h3></div>
+      <div class="it-dir">
+        <span class="it-preco">R$ 9,90</span>
+        <a class="it-pedir" href="https://wa.me/5562986445333?text=Oi!%20Vim%20pelo%20card%C3%A1pio%20do%20site%20e%20quero%201%20Suco%20Del%20Valle%20uva%20290%20ml." target="_blank" rel="noopener">pedir</a>
+      </div>
+    </li>
+    </ul>
+  </section>
+
+  <section class="fecho">
+    <h2>Pronto para pedir?</h2>
+    <p>Mande a mensagem com os sabores e a quantidade. Se for caixa para evento,
+      diga quantas pessoas e a gente monta o orçamento.</p>
+    <div class="capa-acoes">
+      <a class="btn" href="https://wa.me/5562986445333?text=Oi!%20Vim%20pelo%20card%C3%A1pio%20do%20site%20e%20quero%20pedir%20cookies." target="_blank" rel="noopener">Pedir no WhatsApp</a>
+      <a class="btn btn-ghost" href="index.html">Voltar ao site</a>
+    </div>
+  </section>
+</main>
+
+<footer class="rodape">
+  <div class="rodape-topo">
+    <img src="assets/logo-escuro.webp" alt="Steele Doces" width="560" height="356" loading="lazy">
+    <div class="rodape-links">
+      <a href="https://wa.me/5562986445333?text=Oi!%20Vim%20pelo%20card%C3%A1pio%20do%20site%20e%20quero%20pedir%20cookies." target="_blank" rel="noopener">WhatsApp</a>
+      <a href="https://instagram.com/steeledoces" target="_blank" rel="noopener">Instagram</a>
+      <a href="https://www.ifood.com.br/delivery/aparecida-de-goiania-go/steele-doces-setor-dos-afonsos/37a289d9-2f6e-41f7-902d-703e732dee15" target="_blank" rel="noopener">iFood</a>
+      <a href="https://oia.99app.com/dlp9/rGX0HX?area=BR" target="_blank" rel="noopener">99Food</a>
+    </div>
+  </div>
+  <p class="rodape-nota">Steele Doces, Setor dos Afonsos, Aparecida de Goiânia, Goiás.
+    WhatsApp (62) 98644-5333. Preços de venda direta, sujeitos a alteração.
+    Todas as fotos são reais, tiradas na cozinha da Steele.</p>
+</footer>
+
+<script>
+(function(){
+  "use strict";
+  var barra = document.getElementById("barra");
+  var abas  = document.getElementById("abas");
+
+  /* as duas alturas viram variaveis de CSS: uma segura as abas embaixo da barra,
+     a outra e o scroll-margin das secoes, para o titulo nao sumir atras das duas. */
+  function medir(){
+    var d = document.documentElement;
+    d.style.setProperty("--barra-altura", barra.offsetHeight + "px");
+    d.style.setProperty("--topo-altura", (barra.offsetHeight + abas.offsetHeight) + "px");
+  }
+  medir();
+  window.addEventListener("resize", medir);
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(medir);
+
+  /* acende na barra de abas a secao que esta na tela */
+  var links = [].slice.call(abas.querySelectorAll("a"));
+  var secoes = links.map(function(a){ return document.querySelector(a.getAttribute("href")); });
+  if (!("IntersectionObserver" in window)) return;
+  var naTela = {};
+  function acender(){
+    var escolhida = -1;
+    for (var i = 0; i < secoes.length; i++){
+      if (secoes[i] && naTela[secoes[i].id]){ escolhida = i; break; }
+    }
+    links.forEach(function(a, i){ a.classList.toggle("aqui", i === escolhida); });
+  }
+  var io = new IntersectionObserver(function(es){
+    es.forEach(function(e){ naTela[e.target.id] = e.isIntersecting; });
+    acender();
+  }, { rootMargin: "-150px 0px -55% 0px", threshold: 0 });
+  secoes.forEach(function(s){ if (s) io.observe(s); });
+})();
+</script>
+</body>
+</html>

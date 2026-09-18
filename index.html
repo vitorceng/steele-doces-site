@@ -201,24 +201,24 @@ p{margin:0}
 
 .cards{list-style:none;margin:clamp(30px,4.4vh,50px) 0 0;padding:0;display:grid;
   grid-template-columns:repeat(3,1fr);gap:clamp(13px,1.8vw,24px)}
-.card{position:relative;border-radius:22px;background:var(--c);
+.card{position:relative;border-radius:22px;background:var(--paper);
   transition:transform .35s var(--ease),box-shadow .35s var(--ease)}
-.card a{display:block;text-decoration:none;color:#fff;padding:clamp(13px,1.5vw,18px)}
-.card:hover{transform:translateY(-5px);box-shadow:0 18px 40px rgba(0,0,0,.3)}
-.card-foto{background:var(--paper-2);border-radius:50%;width:min(88%,210px);aspect-ratio:1;
-  overflow:hidden;margin:clamp(4px,.8vw,10px) auto clamp(14px,1.7vw,20px)}
-.card-foto img{width:100%;height:100%;object-fit:cover}
-/* os recortes vem com fundo transparente: se cortar como foto, corta o cookie. */
-.card-foto.recorte img{object-fit:contain;padding:10%}
+.card a{display:block;text-decoration:none;color:var(--ink);padding:clamp(13px,1.5vw,18px)}
+.card:hover{transform:translateY(-5px);box-shadow:0 18px 40px rgba(0,0,0,.28)}
+/* todas as nove fotos sao recorte sem fundo, entao o biscoito pousa no proprio
+   card e nao precisa de prato atras. */
+.card-foto{width:min(92%,216px);aspect-ratio:1;margin:clamp(2px,.6vw,8px) auto clamp(12px,1.5vw,18px)}
+.card-foto img{width:100%;height:100%;object-fit:contain}
 .card-preco{position:absolute;top:clamp(21px,2.3vw,27px);right:clamp(21px,2.3vw,27px);z-index:2;
-  background:rgba(251,245,236,.95);color:var(--brand);border-radius:999px;
+  background:var(--brand);color:var(--paper);border-radius:999px;
   padding:5px 13px;font-size:.76rem;font-weight:500;line-height:1.5}
-.card h3{font-size:1.14rem}
-.card p{color:rgba(255,255,255,.78);font-size:.87rem;line-height:1.5;margin-top:5px}
+.escura .card h3{color:var(--brand);font-size:1.14rem}
+.card p{color:var(--muted);font-size:.87rem;line-height:1.5;margin-top:5px}
 @media (max-width:900px){.cards{grid-template-columns:repeat(2,1fr)}}
 @media (max-width:520px){.cards{grid-template-columns:1fr}
   .card a{display:grid;grid-template-columns:96px 1fr;gap:16px;align-items:center;padding:15px}
   .card-foto{width:96px;margin:0}
+  .card-foto img{object-fit:contain}
   .card-preco{top:14px;right:15px}
   /* o preco flutua no canto: o titulo precisa parar antes dele */
   .card h3{padding-right:74px}}
@@ -421,7 +421,7 @@ p{margin:0}
       </div>
 
       <ul class="cards rv">
-        <li class="card" style="--c:#8A5F2C">
+        <li class="card">
           <span class="card-preco">R$ 10,00</span>
           <a href="cardapio.html#artesanais">
             <div class="card-foto">
@@ -433,7 +433,7 @@ p{margin:0}
             </div>
           </a>
         </li>
-        <li class="card" style="--c:#5A3A28">
+        <li class="card">
           <span class="card-preco">R$ 11,00</span>
           <a href="cardapio.html#artesanais">
             <div class="card-foto">
@@ -445,7 +445,7 @@ p{margin:0}
             </div>
           </a>
         </li>
-        <li class="card" style="--c:#8E2233">
+        <li class="card">
           <span class="card-preco">R$ 12,00</span>
           <a href="cardapio.html#artesanais">
             <div class="card-foto">
@@ -457,10 +457,10 @@ p{margin:0}
             </div>
           </a>
         </li>
-        <li class="card" style="--c:#232323">
+        <li class="card">
           <span class="card-preco">R$ 18,00</span>
           <a href="cardapio.html#gourmets">
-            <div class="card-foto recorte">
+            <div class="card-foto">
               <img src="assets/sabores/oreo.webp" alt="Cookie black oreo" width="264" height="264" loading="lazy" decoding="async">
             </div>
             <div class="card-txt">
@@ -469,10 +469,10 @@ p{margin:0}
             </div>
           </a>
         </li>
-        <li class="card" style="--c:#3E2A1C">
+        <li class="card">
           <span class="card-preco">R$ 21,00</span>
           <a href="cardapio.html#recheados">
-            <div class="card-foto recorte">
+            <div class="card-foto">
               <img src="assets/sabores/nutella.webp" alt="Cookie black nutella partido, com o recheio escorrendo" width="264" height="264" loading="lazy" decoding="async">
             </div>
             <div class="card-txt">
@@ -481,10 +481,10 @@ p{margin:0}
             </div>
           </a>
         </li>
-        <li class="card" style="--c:#6E6350">
+        <li class="card">
           <span class="card-preco">R$ 24,00</span>
           <a href="cardapio.html#gourmets">
-            <div class="card-foto recorte">
+            <div class="card-foto">
               <img src="assets/sabores/raffaello.webp" alt="Cookie Raffaello" width="264" height="264" loading="lazy" decoding="async">
             </div>
             <div class="card-txt">
@@ -493,10 +493,10 @@ p{margin:0}
             </div>
           </a>
         </li>
-        <li class="card" style="--c:#7A4E1E">
+        <li class="card">
           <span class="card-preco">R$ 25,00</span>
           <a href="cardapio.html#gourmets">
-            <div class="card-foto recorte">
+            <div class="card-foto">
               <img src="assets/sabores/ferrero.webp" alt="Cookie Ferrero Rocher" width="264" height="264" loading="lazy" decoding="async">
             </div>
             <div class="card-txt">
@@ -505,10 +505,10 @@ p{margin:0}
             </div>
           </a>
         </li>
-        <li class="card" style="--c:#4A3220">
+        <li class="card">
           <span class="card-preco">R$ 26,00</span>
           <a href="cardapio.html#recheados">
-            <div class="card-foto recorte">
+            <div class="card-foto">
               <img src="assets/sabores/brookie.webp" alt="Cookie brookie, metade cookie metade brownie" width="264" height="264" loading="lazy" decoding="async">
             </div>
             <div class="card-txt">
@@ -517,10 +517,10 @@ p{margin:0}
             </div>
           </a>
         </li>
-        <li class="card" style="--c:#24303F">
+        <li class="card">
           <span class="card-preco">R$ 29,00</span>
           <a href="cardapio.html#gourmets">
-            <div class="card-foto recorte">
+            <div class="card-foto">
               <img src="assets/sabores/alpino.webp" alt="Cookie Alpino Black" width="264" height="264" loading="lazy" decoding="async">
             </div>
             <div class="card-txt">
@@ -664,7 +664,7 @@ p{margin:0}
         <a href="https://instagram.com/steeledoces" target="_blank" rel="noopener" aria-label="Instagram da Steele Doces">
           <img src="assets/sabores/biscoito-queijo.webp" alt="Trio de biscoitos de queijo" width="264" height="264" loading="lazy" decoding="async"></a>
         <a href="https://instagram.com/steeledoces" target="_blank" rel="noopener" aria-label="Instagram da Steele Doces">
-          <img src="assets/sabores/redvelvet.webp" alt="Cookie red velvet na mão" width="264" height="264" loading="lazy" decoding="async"></a>
+          <img src="assets/trio.webp" alt="Três cookies Steele partidos, com o recheio à mostra" width="1000" height="1500" loading="lazy" decoding="async"></a>
         <a href="https://instagram.com/steeledoces" target="_blank" rel="noopener" aria-label="Instagram da Steele Doces">
           <img src="assets/sabores.webp" alt="Vários cookies da Steele lado a lado" width="1200" height="900" loading="lazy" decoding="async"></a>
         <a href="https://instagram.com/steeledoces" target="_blank" rel="noopener" aria-label="Instagram da Steele Doces">

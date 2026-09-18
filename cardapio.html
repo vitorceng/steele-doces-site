@@ -140,6 +140,96 @@ main{padding:0 var(--gut) clamp(50px,8vh,90px)}
 .it-txt p{color:var(--muted);font-size:.92rem;margin-top:4px}
 .it-dir{display:flex;flex-direction:column;align-items:flex-end;gap:6px}
 .it-preco{font-family:var(--display);font-size:1.12rem;color:var(--brand);white-space:nowrap}
+
+/* ---------- seletor de quantidade ---------- */
+.qtd{display:inline-flex;align-items:center;gap:2px;margin-top:8px;
+  border:1px solid var(--line-2);border-radius:2px;background:#fff}
+.qtd-b{width:34px;height:34px;border:0;background:transparent;cursor:pointer;
+  font-family:var(--body);font-size:1.15rem;line-height:1;color:var(--brand);
+  transition:background .2s var(--ease)}
+.qtd-b:hover{background:rgba(74,85,57,.09)}
+.qtd-n{min-width:26px;text-align:center;font-family:var(--display);
+  font-size:1.02rem;color:var(--ink)}
+/* o item escolhido precisa se destacar da lista, senao o cliente perde a conta */
+.it.tem{background:rgba(143,103,39,.05)}
+.it.tem .qtd{border-color:var(--brand)}
+.it.tem .qtd-n{color:var(--brand)}
+
+/* o Trio e a porta de entrada: vem primeiro e precisa parecer a escolha obvia */
+.it-destaque{background:var(--paper-2);border:1px solid var(--line-2);
+  border-left:3px solid var(--gold);padding:16px;margin-bottom:6px;flex-wrap:wrap}
+.it-destaque .it-foto{width:120px;height:120px;object-fit:cover;border-radius:2px}
+.it-selo{font-family:var(--body);font-weight:500;font-size:.66rem;letter-spacing:.20em;
+  text-transform:uppercase;color:var(--gold);margin-bottom:5px}
+.it-destaque h3{font-size:1.28rem}
+
+/* montador do trio: so aparece depois de escolher a quantidade */
+.montador{flex-basis:100%;margin-top:14px;padding-top:14px;border-top:1px dashed var(--line-2)}
+.montador-titulo{font-family:var(--body);font-weight:500;font-size:.66rem;letter-spacing:.20em;
+  text-transform:uppercase;color:var(--gold);margin-bottom:10px}
+.montador-grupo{margin-bottom:12px}
+.montador-grupo:last-child{margin-bottom:0}
+.montador-rot{font-size:.82rem;color:var(--muted);margin-bottom:6px}
+.montador-selos{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.montador-selos select{font-family:var(--body);font-size:.88rem;color:var(--ink);background:#fff;
+  border:1px solid var(--line-2);border-radius:2px;padding:9px 8px;width:100%}
+.montador-selos select:focus-visible{outline:2px solid var(--gold);outline-offset:1px}
+@media (max-width:520px){.montador-selos{grid-template-columns:1fr;gap:6px}
+  .it-destaque .it-foto{width:96px;height:96px}}
+
+/* ---------- barra fixa do carrinho ---------- */
+.carrinho{position:fixed;left:0;right:0;bottom:0;z-index:60;
+  display:flex;align-items:center;justify-content:space-between;gap:16px;
+  padding:12px clamp(16px,4vw,32px);background:rgba(251,245,236,.97);
+  backdrop-filter:blur(12px);border-top:1px solid var(--line-2);
+  transform:translateY(105%);transition:transform .4s var(--ease)}
+.carrinho.on{transform:none}
+.carrinho-info{display:flex;flex-direction:column;gap:1px;min-width:0}
+.carrinho-info .ci{font-size:.8rem;color:var(--muted)}
+.carrinho-info .cv{font-family:var(--display);font-size:1.25rem;color:var(--brand);line-height:1.1}
+.carrinho .btn{flex:none}
+@media (max-width:420px){.carrinho .btn{padding:13px 18px;font-size:.88rem}}
+
+/* ---------- fechamento do pedido ---------- */
+.fechar{padding:clamp(40px,6vh,72px) var(--gut) 120px;background:var(--paper-2);
+  scroll-margin-top:var(--topo-altura)}
+.fechar-caixa{max-width:640px;margin-inline:auto}
+.fechar h2{margin-bottom:6px}
+.resumo{list-style:none;margin:22px 0 0;padding:0}
+.resumo li{display:flex;justify-content:space-between;gap:14px;padding:9px 0;
+  border-bottom:1px solid var(--line);font-size:.95rem}
+.resumo .r-nome{color:var(--ink)}
+.resumo .r-val{font-family:var(--display);color:var(--brand);white-space:nowrap}
+.vazio{padding:20px 0;color:var(--muted);font-size:.95rem}
+
+/* a barra de progresso do frete gratis: mostrar quanto falta aumenta o pedido */
+.progresso{margin-top:16px;font-size:.88rem;color:#5E6753}
+.progresso .barra-frete{height:4px;background:var(--line);border-radius:2px;margin-top:8px;overflow:hidden}
+.progresso .barra-frete i{display:block;height:100%;background:var(--gold);
+  width:0;transition:width .4s var(--ease)}
+.progresso.ok{color:var(--brand)}
+.progresso.ok .barra-frete i{background:var(--brand)}
+
+.campos{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:26px}
+.campo{display:flex;flex-direction:column;gap:6px}
+.campo.largo{grid-column:1/-1}
+.campo label{font-family:var(--body);font-weight:500;font-size:.70rem;letter-spacing:.20em;
+  text-transform:uppercase;color:var(--gold)}
+.campo input,.campo select,.campo textarea{font-family:var(--body);font-size:.95rem;
+  color:var(--ink);background:#fff;border:1px solid var(--line-2);border-radius:2px;
+  padding:11px 13px;width:100%}
+.campo textarea{resize:vertical;min-height:64px}
+.campo input:focus-visible,.campo select:focus-visible,.campo textarea:focus-visible{
+  outline:2px solid var(--gold);outline-offset:1px}
+@media (max-width:560px){.campos{grid-template-columns:1fr}}
+
+.totais{margin-top:24px;border-top:1px solid var(--line-2);padding-top:14px}
+.totais div{display:flex;justify-content:space-between;padding:5px 0;font-size:.95rem;color:#5E6753}
+.totais .t-grande{font-family:var(--display);font-size:1.4rem;color:var(--brand);
+  border-top:1px solid var(--line);margin-top:8px;padding-top:12px}
+.aviso-min{margin-top:14px;font-size:.88rem;color:var(--gold)}
+.fechar .btn{margin-top:20px;width:100%}
+.fechar .btn[aria-disabled="true"]{opacity:.45;pointer-events:none}
 .it-pedir{font-size:.74rem;letter-spacing:.16em;text-transform:uppercase;
   color:var(--gold);text-decoration:none;border-bottom:1px solid transparent;
   transition:border-color .3s var(--ease)}
@@ -237,7 +327,6 @@ main{padding:0 var(--gut) clamp(50px,8vh,90px)}
     <a href="#recheados">Recheados</a>
     <a href="#gourmets">Gourmets</a>
     <a href="#cup">CupCookies</a>
-    <a href="#bolos">Bolos individuais</a>
     <a href="#salgados">Salgados</a>
     <a href="#bebidas">Bebidas</a>
 </nav>
@@ -250,7 +339,24 @@ main{padding:0 var(--gut) clamp(50px,8vh,90px)}
       <p class="grupo-nota">Massa de sempre, gotas de chocolate de verdade. É por aqui que começa quem nunca provou.</p>
     </div>
     <ul class="lista">
-    <li class="it">
+    <li class="it it-destaque" data-id="trio-de-cookies" data-nome="Trio de cookies" data-preco="30">
+      <img class="it-foto" src="assets/sabores/trio.webp" alt="Três cookies artesanais empilhados: tradicional, chocolate e red velvet" width="264" height="264" loading="eager" decoding="async">
+      <div class="it-txt">
+        <p class="it-selo">Mais pedido &middot; entrega grátis</p>
+        <h3>Trio de cookies</h3>
+        <p>Três artesanais à sua escolha, na caixa. Sai R$ 3 mais barato que comprar os três avulsos.</p>
+      </div>
+      <div class="it-dir">
+        <span class="it-preco">R$ 30,00</span>
+        <div class="qtd" data-qtd="trio-de-cookies">
+          <button type="button" class="qtd-b" data-d="-1" aria-label="Tirar um Trio de cookies">&minus;</button>
+          <span class="qtd-n">0</span>
+          <button type="button" class="qtd-b" data-d="1" aria-label="Adicionar um Trio de cookies">+</button>
+        </div>
+      </div>
+      <div class="montador" id="montador" hidden></div>
+    </li>
+    <li class="it" data-id="tradicional" data-nome="Tradicional" data-preco="10">
       <img class="it-foto" src="assets/sabores/tradicional.webp" alt="Cookie tradicional partido, com gotas de chocolate" width="264" height="264" loading="lazy" decoding="async">
       <div class="it-txt">
         <h3>Tradicional</h3>
@@ -258,10 +364,14 @@ main{padding:0 var(--gut) clamp(50px,8vh,90px)}
       </div>
       <div class="it-dir">
         <span class="it-preco">R$ 10,00</span>
-        <a class="it-pedir" href="https://wa.me/5562986445333?text=Oi!%20Vim%20pelo%20card%C3%A1pio%20do%20site%20e%20quero%201%20Tradicional." target="_blank" rel="noopener">pedir</a>
+        <div class="qtd" data-qtd="tradicional">
+          <button type="button" class="qtd-b" data-d="-1" aria-label="Tirar um Tradicional">&minus;</button>
+          <span class="qtd-n">0</span>
+          <button type="button" class="qtd-b" data-d="1" aria-label="Adicionar um Tradicional">+</button>
+        </div>
       </div>
     </li>
-    <li class="it">
+    <li class="it" data-id="chocolate-com-cafe" data-nome="Chocolate com café" data-preco="11">
       <img class="it-foto" src="assets/sabores/cafe.webp" alt="Cookie de chocolate com café" width="264" height="264" loading="lazy" decoding="async">
       <div class="it-txt">
         <h3>Chocolate com café</h3>
@@ -269,10 +379,14 @@ main{padding:0 var(--gut) clamp(50px,8vh,90px)}
       </div>
       <div class="it-dir">
         <span class="it-preco">R$ 11,00</span>
-        <a class="it-pedir" href="https://wa.me/5562986445333?text=Oi!%20Vim%20pelo%20card%C3%A1pio%20do%20site%20e%20quero%201%20Chocolate%20com%20caf%C3%A9." target="_blank" rel="noopener">pedir</a>
+        <div class="qtd" data-qtd="chocolate-com-cafe">
+          <button type="button" class="qtd-b" data-d="-1" aria-label="Tirar um Chocolate com café">&minus;</button>
+          <span class="qtd-n">0</span>
+          <button type="button" class="qtd-b" data-d="1" aria-label="Adicionar um Chocolate com café">+</button>
+        </div>
       </div>
     </li>
-    <li class="it">
+    <li class="it" data-id="red-velvet" data-nome="Red velvet" data-preco="12">
       <img class="it-foto" src="assets/sabores/redvelvet.webp" alt="Três cookies red velvet empilhados" width="264" height="264" loading="lazy" decoding="async">
       <div class="it-txt">
         <h3>Red velvet</h3>
@@ -280,18 +394,11 @@ main{padding:0 var(--gut) clamp(50px,8vh,90px)}
       </div>
       <div class="it-dir">
         <span class="it-preco">R$ 12,00</span>
-        <a class="it-pedir" href="https://wa.me/5562986445333?text=Oi!%20Vim%20pelo%20card%C3%A1pio%20do%20site%20e%20quero%201%20Red%20velvet." target="_blank" rel="noopener">pedir</a>
-      </div>
-    </li>
-    <li class="it">
-      <span class="it-foto it-foto-vazia" aria-hidden="true"></span>
-      <div class="it-txt">
-        <h3>Trio de cookies</h3>
-        <p>Três artesanais à sua escolha, na caixa.</p>
-      </div>
-      <div class="it-dir">
-        <span class="it-preco">R$ 30,00</span>
-        <a class="it-pedir" href="https://wa.me/5562986445333?text=Oi!%20Vim%20pelo%20card%C3%A1pio%20do%20site%20e%20quero%201%20Trio%20de%20cookies." target="_blank" rel="noopener">pedir</a>
+        <div class="qtd" data-qtd="red-velvet">
+          <button type="button" class="qtd-b" data-d="-1" aria-label="Tirar um Red velvet">&minus;</button>
+          <span class="qtd-n">0</span>
+          <button type="button" class="qtd-b" data-d="1" aria-label="Adicionar um Red velvet">+</button>
+        </div>
       </div>
     </li>
     </ul>
@@ -303,7 +410,7 @@ main{padding:0 var(--gut) clamp(50px,8vh,90px)}
       <p class="grupo-nota">A massa segura o recheio quente sem virar sobremesa de colher.</p>
     </div>
     <ul class="lista">
-    <li class="it">
+    <li class="it" data-id="black-nutella" data-nome="Black Nutella" data-preco="21">
       <img class="it-foto" src="assets/sabores/nutella.webp" alt="Cookie black Nutella partido ao meio" width="264" height="264" loading="lazy" decoding="async">
       <div class="it-txt">
         <h3>Black Nutella</h3>
@@ -311,10 +418,14 @@ main{padding:0 var(--gut) clamp(50px,8vh,90px)}
       </div>
       <div class="it-dir">
         <span class="it-preco">R$ 21,00</span>
-        <a class="it-pedir" href="https://wa.me/5562986445333?text=Oi!%20Vim%20pelo%20card%C3%A1pio%20do%20site%20e%20quero%201%20Black%20Nutella." target="_blank" rel="noopener">pedir</a>
+        <div class="qtd" data-qtd="black-nutella">
+          <button type="button" class="qtd-b" data-d="-1" aria-label="Tirar um Black Nutella">&minus;</button>
+          <span class="qtd-n">0</span>
+          <button type="button" class="qtd-b" data-d="1" aria-label="Adicionar um Black Nutella">+</button>
+        </div>
       </div>
     </li>
-    <li class="it">
+    <li class="it" data-id="brookie" data-nome="Brookie" data-preco="26">
       <img class="it-foto" src="assets/sabores/brookie.webp" alt="Cookie brookie partido, com brownie dentro" width="264" height="264" loading="lazy" decoding="async">
       <div class="it-txt">
         <h3>Brookie</h3>
@@ -322,7 +433,11 @@ main{padding:0 var(--gut) clamp(50px,8vh,90px)}
       </div>
       <div class="it-dir">
         <span class="it-preco">R$ 26,00</span>
-        <a class="it-pedir" href="https://wa.me/5562986445333?text=Oi!%20Vim%20pelo%20card%C3%A1pio%20do%20site%20e%20quero%201%20Brookie." target="_blank" rel="noopener">pedir</a>
+        <div class="qtd" data-qtd="brookie">
+          <button type="button" class="qtd-b" data-d="-1" aria-label="Tirar um Brookie">&minus;</button>
+          <span class="qtd-n">0</span>
+          <button type="button" class="qtd-b" data-d="1" aria-label="Adicionar um Brookie">+</button>
+        </div>
       </div>
     </li>
     </ul>
@@ -334,7 +449,7 @@ main{padding:0 var(--gut) clamp(50px,8vh,90px)}
       <p class="grupo-nota">Os que levam bombom inteiro, coco fresco ou Oreo dentro da massa.</p>
     </div>
     <ul class="lista">
-    <li class="it">
+    <li class="it" data-id="black-oreo" data-nome="Black Oreo" data-preco="18">
       <img class="it-foto" src="assets/sabores/oreo.webp" alt="Cookie black Oreo com biscoito por cima" width="264" height="264" loading="lazy" decoding="async">
       <div class="it-txt">
         <h3>Black Oreo</h3>
@@ -342,21 +457,29 @@ main{padding:0 var(--gut) clamp(50px,8vh,90px)}
       </div>
       <div class="it-dir">
         <span class="it-preco">R$ 18,00</span>
-        <a class="it-pedir" href="https://wa.me/5562986445333?text=Oi!%20Vim%20pelo%20card%C3%A1pio%20do%20site%20e%20quero%201%20Black%20Oreo." target="_blank" rel="noopener">pedir</a>
+        <div class="qtd" data-qtd="black-oreo">
+          <button type="button" class="qtd-b" data-d="-1" aria-label="Tirar um Black Oreo">&minus;</button>
+          <span class="qtd-n">0</span>
+          <button type="button" class="qtd-b" data-d="1" aria-label="Adicionar um Black Oreo">+</button>
+        </div>
       </div>
     </li>
-    <li class="it">
+    <li class="it" data-id="raffaello" data-nome="Raffaello" data-preco="24">
       <img class="it-foto" src="assets/sabores/raffaello.webp" alt="Cookie Raffaello partido, recheio de coco" width="264" height="264" loading="lazy" decoding="async">
       <div class="it-txt">
         <h3>Raffaello</h3>
-        <p>Coco e amêndoa, com chocolate branco cremoso no centro.</p>
+        <p>Coco e chocolate branco na massa, com o bombom Raffaello inteiro no meio.</p>
       </div>
       <div class="it-dir">
         <span class="it-preco">R$ 24,00</span>
-        <a class="it-pedir" href="https://wa.me/5562986445333?text=Oi!%20Vim%20pelo%20card%C3%A1pio%20do%20site%20e%20quero%201%20Raffaello." target="_blank" rel="noopener">pedir</a>
+        <div class="qtd" data-qtd="raffaello">
+          <button type="button" class="qtd-b" data-d="-1" aria-label="Tirar um Raffaello">&minus;</button>
+          <span class="qtd-n">0</span>
+          <button type="button" class="qtd-b" data-d="1" aria-label="Adicionar um Raffaello">+</button>
+        </div>
       </div>
     </li>
-    <li class="it">
+    <li class="it" data-id="ferrero-rocher" data-nome="Ferrero Rocher" data-preco="25">
       <img class="it-foto" src="assets/sabores/ferrero.webp" alt="Cookie Ferrero Rocher com o bombom dentro" width="264" height="264" loading="lazy" decoding="async">
       <div class="it-txt">
         <h3>Ferrero Rocher</h3>
@@ -364,10 +487,14 @@ main{padding:0 var(--gut) clamp(50px,8vh,90px)}
       </div>
       <div class="it-dir">
         <span class="it-preco">R$ 25,00</span>
-        <a class="it-pedir" href="https://wa.me/5562986445333?text=Oi!%20Vim%20pelo%20card%C3%A1pio%20do%20site%20e%20quero%201%20Ferrero%20Rocher." target="_blank" rel="noopener">pedir</a>
+        <div class="qtd" data-qtd="ferrero-rocher">
+          <button type="button" class="qtd-b" data-d="-1" aria-label="Tirar um Ferrero Rocher">&minus;</button>
+          <span class="qtd-n">0</span>
+          <button type="button" class="qtd-b" data-d="1" aria-label="Adicionar um Ferrero Rocher">+</button>
+        </div>
       </div>
     </li>
-    <li class="it">
+    <li class="it" data-id="alpino-black" data-nome="Alpino Black" data-preco="29">
       <img class="it-foto" src="assets/sabores/alpino.webp" alt="Cookie Alpino Black partido ao meio" width="264" height="264" loading="lazy" decoding="async">
       <div class="it-txt">
         <h3>Alpino Black</h3>
@@ -375,7 +502,11 @@ main{padding:0 var(--gut) clamp(50px,8vh,90px)}
       </div>
       <div class="it-dir">
         <span class="it-preco">R$ 29,00</span>
-        <a class="it-pedir" href="https://wa.me/5562986445333?text=Oi!%20Vim%20pelo%20card%C3%A1pio%20do%20site%20e%20quero%201%20Alpino%20Black." target="_blank" rel="noopener">pedir</a>
+        <div class="qtd" data-qtd="alpino-black">
+          <button type="button" class="qtd-b" data-d="-1" aria-label="Tirar um Alpino Black">&minus;</button>
+          <span class="qtd-n">0</span>
+          <button type="button" class="qtd-b" data-d="1" aria-label="Adicionar um Alpino Black">+</button>
+        </div>
       </div>
     </li>
     </ul>
@@ -387,44 +518,20 @@ main{padding:0 var(--gut) clamp(50px,8vh,90px)}
       <p class="grupo-nota">Dez mini cookies no copo. Vai bem como presente.</p>
     </div>
     <ul class="lista">
-    <li class="it it-simples">
+    <li class="it it-simples" data-id="tradicional-com-nutella" data-nome="Tradicional com Nutella" data-preco="37">
       <div class="it-txt"><h3>Tradicional com Nutella</h3></div>
       <div class="it-dir">
         <span class="it-preco">R$ 37,00</span>
-        <a class="it-pedir" href="https://wa.me/5562986445333?text=Oi!%20Vim%20pelo%20card%C3%A1pio%20do%20site%20e%20quero%201%20Tradicional%20com%20Nutella." target="_blank" rel="noopener">pedir</a>
-      </div>
-    </li>
-    <li class="it it-simples">
-      <div class="it-txt"><h3>Tradicional com pistache</h3></div>
-      <div class="it-dir">
-        <span class="it-preco">R$ 39,00</span>
-        <a class="it-pedir" href="https://wa.me/5562986445333?text=Oi!%20Vim%20pelo%20card%C3%A1pio%20do%20site%20e%20quero%201%20Tradicional%20com%20pistache." target="_blank" rel="noopener">pedir</a>
+        <div class="qtd" data-qtd="tradicional-com-nutella">
+          <button type="button" class="qtd-b" data-d="-1" aria-label="Tirar um Tradicional com Nutella">&minus;</button>
+          <span class="qtd-n">0</span>
+          <button type="button" class="qtd-b" data-d="1" aria-label="Adicionar um Tradicional com Nutella">+</button>
+        </div>
       </div>
     </li>
     </ul>
   </section>
 
-  <section class="grupo grupo-curto" id="bolos" aria-labelledby="h-bolos">
-    <div class="grupo-topo">
-      <h2 id="h-bolos">Bolos individuais</h2>
-    </div>
-    <ul class="lista">
-    <li class="it it-simples">
-      <div class="it-txt"><h3>Cenoura com ganache</h3></div>
-      <div class="it-dir">
-        <span class="it-preco">R$ 16,00</span>
-        <a class="it-pedir" href="https://wa.me/5562986445333?text=Oi!%20Vim%20pelo%20card%C3%A1pio%20do%20site%20e%20quero%201%20Cenoura%20com%20ganache." target="_blank" rel="noopener">pedir</a>
-      </div>
-    </li>
-    <li class="it it-simples">
-      <div class="it-txt"><h3>Ferrero Rocher</h3></div>
-      <div class="it-dir">
-        <span class="it-preco">R$ 31,00</span>
-        <a class="it-pedir" href="https://wa.me/5562986445333?text=Oi!%20Vim%20pelo%20card%C3%A1pio%20do%20site%20e%20quero%201%20Ferrero%20Rocher." target="_blank" rel="noopener">pedir</a>
-      </div>
-    </li>
-    </ul>
-  </section>
 
   <section class="grupo grupo-curto" id="salgados" aria-labelledby="h-salgados">
     <div class="grupo-topo">
@@ -432,11 +539,15 @@ main{padding:0 var(--gut) clamp(50px,8vh,90px)}
       <p class="grupo-nota">Para quebrar o doce. Vão ao forno junto com os cookies.</p>
     </div>
     <ul class="lista">
-    <li class="it it-simples">
+    <li class="it it-simples" data-id="trio-de-biscoitos-de-queijo" data-nome="Trio de biscoitos de queijo" data-preco="15">
       <div class="it-txt"><h3>Trio de biscoitos de queijo</h3></div>
       <div class="it-dir">
         <span class="it-preco">R$ 15,00</span>
-        <a class="it-pedir" href="https://wa.me/5562986445333?text=Oi!%20Vim%20pelo%20card%C3%A1pio%20do%20site%20e%20quero%201%20Trio%20de%20biscoitos%20de%20queijo." target="_blank" rel="noopener">pedir</a>
+        <div class="qtd" data-qtd="trio-de-biscoitos-de-queijo">
+          <button type="button" class="qtd-b" data-d="-1" aria-label="Tirar um Trio de biscoitos de queijo">&minus;</button>
+          <span class="qtd-n">0</span>
+          <button type="button" class="qtd-b" data-d="1" aria-label="Adicionar um Trio de biscoitos de queijo">+</button>
+        </div>
       </div>
     </li>
     </ul>
@@ -447,65 +558,157 @@ main{padding:0 var(--gut) clamp(50px,8vh,90px)}
       <h2 id="h-bebidas">Bebidas</h2>
     </div>
     <ul class="lista">
-    <li class="it it-simples">
+    <li class="it it-simples" data-id="coca-cola-lata-350-ml" data-nome="Coca-Cola lata 350 ml" data-preco="8.9">
       <div class="it-txt"><h3>Coca-Cola lata 350 ml</h3></div>
       <div class="it-dir">
         <span class="it-preco">R$ 8,90</span>
-        <a class="it-pedir" href="https://wa.me/5562986445333?text=Oi!%20Vim%20pelo%20card%C3%A1pio%20do%20site%20e%20quero%201%20Coca-Cola%20lata%20350%20ml." target="_blank" rel="noopener">pedir</a>
+        <div class="qtd" data-qtd="coca-cola-lata-350-ml">
+          <button type="button" class="qtd-b" data-d="-1" aria-label="Tirar um Coca-Cola lata 350 ml">&minus;</button>
+          <span class="qtd-n">0</span>
+          <button type="button" class="qtd-b" data-d="1" aria-label="Adicionar um Coca-Cola lata 350 ml">+</button>
+        </div>
       </div>
     </li>
-    <li class="it it-simples">
+    <li class="it it-simples" data-id="coca-cola-zero-lata-350-ml" data-nome="Coca-Cola Zero lata 350 ml" data-preco="8.9">
       <div class="it-txt"><h3>Coca-Cola Zero lata 350 ml</h3></div>
       <div class="it-dir">
         <span class="it-preco">R$ 8,90</span>
-        <a class="it-pedir" href="https://wa.me/5562986445333?text=Oi!%20Vim%20pelo%20card%C3%A1pio%20do%20site%20e%20quero%201%20Coca-Cola%20Zero%20lata%20350%20ml." target="_blank" rel="noopener">pedir</a>
+        <div class="qtd" data-qtd="coca-cola-zero-lata-350-ml">
+          <button type="button" class="qtd-b" data-d="-1" aria-label="Tirar um Coca-Cola Zero lata 350 ml">&minus;</button>
+          <span class="qtd-n">0</span>
+          <button type="button" class="qtd-b" data-d="1" aria-label="Adicionar um Coca-Cola Zero lata 350 ml">+</button>
+        </div>
       </div>
     </li>
-    <li class="it it-simples">
+    <li class="it it-simples" data-id="guarana-antarctica-lata-350-ml" data-nome="Guaraná Antarctica lata 350 ml" data-preco="7.9">
       <div class="it-txt"><h3>Guaraná Antarctica lata 350 ml</h3></div>
       <div class="it-dir">
         <span class="it-preco">R$ 7,90</span>
-        <a class="it-pedir" href="https://wa.me/5562986445333?text=Oi!%20Vim%20pelo%20card%C3%A1pio%20do%20site%20e%20quero%201%20Guaran%C3%A1%20Antarctica%20lata%20350%20ml." target="_blank" rel="noopener">pedir</a>
+        <div class="qtd" data-qtd="guarana-antarctica-lata-350-ml">
+          <button type="button" class="qtd-b" data-d="-1" aria-label="Tirar um Guaraná Antarctica lata 350 ml">&minus;</button>
+          <span class="qtd-n">0</span>
+          <button type="button" class="qtd-b" data-d="1" aria-label="Adicionar um Guaraná Antarctica lata 350 ml">+</button>
+        </div>
       </div>
     </li>
-    <li class="it it-simples">
+    <li class="it it-simples" data-id="agua-mineral-com-gas-500-ml" data-nome="Água mineral com gás 500 ml" data-preco="5.9">
       <div class="it-txt"><h3>Água mineral com gás 500 ml</h3></div>
       <div class="it-dir">
         <span class="it-preco">R$ 5,90</span>
-        <a class="it-pedir" href="https://wa.me/5562986445333?text=Oi!%20Vim%20pelo%20card%C3%A1pio%20do%20site%20e%20quero%201%20%C3%81gua%20mineral%20com%20g%C3%A1s%20500%20ml." target="_blank" rel="noopener">pedir</a>
+        <div class="qtd" data-qtd="agua-mineral-com-gas-500-ml">
+          <button type="button" class="qtd-b" data-d="-1" aria-label="Tirar um Água mineral com gás 500 ml">&minus;</button>
+          <span class="qtd-n">0</span>
+          <button type="button" class="qtd-b" data-d="1" aria-label="Adicionar um Água mineral com gás 500 ml">+</button>
+        </div>
       </div>
     </li>
-    <li class="it it-simples">
+    <li class="it it-simples" data-id="agua-mineral-sem-gas-500-ml" data-nome="Água mineral sem gás 500 ml" data-preco="4.9">
       <div class="it-txt"><h3>Água mineral sem gás 500 ml</h3></div>
       <div class="it-dir">
         <span class="it-preco">R$ 4,90</span>
-        <a class="it-pedir" href="https://wa.me/5562986445333?text=Oi!%20Vim%20pelo%20card%C3%A1pio%20do%20site%20e%20quero%201%20%C3%81gua%20mineral%20sem%20g%C3%A1s%20500%20ml." target="_blank" rel="noopener">pedir</a>
+        <div class="qtd" data-qtd="agua-mineral-sem-gas-500-ml">
+          <button type="button" class="qtd-b" data-d="-1" aria-label="Tirar um Água mineral sem gás 500 ml">&minus;</button>
+          <span class="qtd-n">0</span>
+          <button type="button" class="qtd-b" data-d="1" aria-label="Adicionar um Água mineral sem gás 500 ml">+</button>
+        </div>
       </div>
     </li>
-    <li class="it it-simples">
+    <li class="it it-simples" data-id="suco-del-valle-maracuja-290-ml" data-nome="Suco Del Valle maracujá 290 ml" data-preco="9.9">
       <div class="it-txt"><h3>Suco Del Valle maracujá 290 ml</h3></div>
       <div class="it-dir">
         <span class="it-preco">R$ 9,90</span>
-        <a class="it-pedir" href="https://wa.me/5562986445333?text=Oi!%20Vim%20pelo%20card%C3%A1pio%20do%20site%20e%20quero%201%20Suco%20Del%20Valle%20maracuj%C3%A1%20290%20ml." target="_blank" rel="noopener">pedir</a>
+        <div class="qtd" data-qtd="suco-del-valle-maracuja-290-ml">
+          <button type="button" class="qtd-b" data-d="-1" aria-label="Tirar um Suco Del Valle maracujá 290 ml">&minus;</button>
+          <span class="qtd-n">0</span>
+          <button type="button" class="qtd-b" data-d="1" aria-label="Adicionar um Suco Del Valle maracujá 290 ml">+</button>
+        </div>
       </div>
     </li>
-    <li class="it it-simples">
+    <li class="it it-simples" data-id="suco-del-valle-uva-290-ml" data-nome="Suco Del Valle uva 290 ml" data-preco="9.9">
       <div class="it-txt"><h3>Suco Del Valle uva 290 ml</h3></div>
       <div class="it-dir">
         <span class="it-preco">R$ 9,90</span>
-        <a class="it-pedir" href="https://wa.me/5562986445333?text=Oi!%20Vim%20pelo%20card%C3%A1pio%20do%20site%20e%20quero%201%20Suco%20Del%20Valle%20uva%20290%20ml." target="_blank" rel="noopener">pedir</a>
+        <div class="qtd" data-qtd="suco-del-valle-uva-290-ml">
+          <button type="button" class="qtd-b" data-d="-1" aria-label="Tirar um Suco Del Valle uva 290 ml">&minus;</button>
+          <span class="qtd-n">0</span>
+          <button type="button" class="qtd-b" data-d="1" aria-label="Adicionar um Suco Del Valle uva 290 ml">+</button>
+        </div>
       </div>
     </li>
     </ul>
   </section>
 
-  <section class="fecho">
-    <h2>Pronto para pedir?</h2>
-    <p>Mande a mensagem com os sabores e a quantidade. Se for caixa para evento,
-      diga quantas pessoas e a gente monta o orçamento.</p>
-    <div class="capa-acoes">
-      <a class="btn" href="https://wa.me/5562986445333?text=Oi!%20Vim%20pelo%20card%C3%A1pio%20do%20site%20e%20quero%20pedir%20cookies." target="_blank" rel="noopener">Pedir no WhatsApp</a>
-      <a class="btn btn-ghost" href="index.html">Voltar ao site</a>
+  <section class="fechar" id="fechar" aria-labelledby="h-fechar">
+    <div class="fechar-caixa">
+      <p class="kicker">Fechar pedido</p>
+      <h2 id="h-fechar">Seu pedido</h2>
+      <p class="grupo-nota">Monte tudo aqui. A mensagem vai pronta para o WhatsApp, com os itens,
+        o endereço e o total — você só aperta enviar.</p>
+
+      <ul class="resumo" id="resumo"></ul>
+      <p class="vazio" id="vazio">Nenhum item escolhido ainda. Use os botões + ao lado de cada item.</p>
+
+      <div class="progresso" id="progresso" hidden>
+        <span id="progresso-txt"></span>
+        <span class="barra-frete"><i id="progresso-barra"></i></span>
+      </div>
+
+      <div class="campos">
+        <div class="campo">
+          <label for="f-nome">Seu nome</label>
+          <input id="f-nome" type="text" autocomplete="name" placeholder="Como te chamamos">
+        </div>
+        <div class="campo">
+          <label for="f-tipo">Entrega ou retirada</label>
+          <select id="f-tipo">
+            <option value="entrega">Entrega</option>
+            <option value="retirada">Retirada na loja</option>
+          </select>
+        </div>
+        <div class="campo largo" id="w-dist">
+          <label for="f-dist">Distância até você</label>
+          <select id="f-dist">
+            <option value="0">Até 3 km — entrega grátis</option>
+            <option value="5">3 a 6 km — R$ 5,00 (grátis acima de R$ 60)</option>
+            <option value="10">6 a 10 km — R$ 10,00 (grátis acima de R$ 80)</option>
+            <option value="-1">Acima de 10 km — combinamos no WhatsApp</option>
+            <option value="-2">Não sei — vocês confirmam</option>
+          </select>
+        </div>
+        <div class="campo largo" id="w-end">
+          <label for="f-end">Endereço da entrega</label>
+          <input id="f-end" type="text" autocomplete="street-address"
+                 placeholder="Rua, número, bairro e ponto de referência">
+        </div>
+        <div class="campo">
+          <label for="f-pag">Pagamento</label>
+          <select id="f-pag">
+            <option>Pix</option>
+            <option>Cartão na entrega</option>
+            <option>Dinheiro</option>
+          </select>
+        </div>
+        <div class="campo" id="w-troco" hidden>
+          <label for="f-troco">Troco para quanto?</label>
+          <input id="f-troco" type="text" inputmode="numeric" placeholder="Ex.: 100">
+        </div>
+        <div class="campo largo">
+          <label for="f-obs">Observação (opcional)</label>
+          <textarea id="f-obs" placeholder="Alguma preferência, alergia ou recado"></textarea>
+        </div>
+      </div>
+
+      <div class="totais">
+        <div><span>Subtotal</span><span id="t-sub">R$ 0,00</span></div>
+        <div><span id="t-ent-rot">Entrega</span><span id="t-ent">—</span></div>
+        <div class="t-grande"><span>Total</span><span id="t-tot">R$ 0,00</span></div>
+      </div>
+
+      <p class="aviso-min" id="aviso-min" hidden></p>
+
+      <a class="btn" id="enviar" href="#" target="_blank" rel="noopener" aria-disabled="true">Enviar pelo WhatsApp</a>
+      <p class="grupo-nota" style="margin-top:12px">Nada é cobrado aqui. A confirmação do pedido e o
+        pagamento acontecem na conversa.</p>
     </div>
   </section>
 </main>
@@ -520,7 +723,7 @@ main{padding:0 var(--gut) clamp(50px,8vh,90px)}
       <a href="https://oia.99app.com/dlp9/rGX0HX?area=BR" target="_blank" rel="noopener">99Food</a>
     </div>
   </div>
-  <p class="rodape-nota">Steele Doces, Setor dos Afonsos, Aparecida de Goiânia, Goiás.
+  <p class="rodape-nota">Steele Doces &middot; Setor dos Afonsos, Aparecida de Goiânia &middot; Senador Canedo, Goiás.
     WhatsApp (62) 98644-5333. Preços de venda direta, sujeitos a alteração.
     Todas as fotos são reais, tiradas na cozinha da Steele.</p>
 </footer>
@@ -559,6 +762,228 @@ main{padding:0 var(--gut) clamp(50px,8vh,90px)}
     acender();
   }, { rootMargin: "-150px 0px -55% 0px", threshold: 0 });
   secoes.forEach(function(s){ if (s) io.observe(s); });
+})();
+</script>
+<div class="carrinho" id="carrinho">
+  <div class="carrinho-info">
+    <span class="ci" id="c-itens">0 itens</span>
+    <span class="cv" id="c-total">R$ 0,00</span>
+  </div>
+  <a class="btn" href="#fechar">Ver o pedido</a>
+</div>
+
+<script>
+/* ---------- carrinho e fechamento do pedido ----------
+   Sem framework, de proposito: o site inteiro e HTML e JS na mao.
+   O carrinho vive no localStorage para o cliente nao perder o que montou
+   se sair da pagina e voltar. */
+(function(){
+  "use strict";
+  var ZAP = "5562986445333";
+  var CHAVE = "steele-pedido";
+  var MINIMO = 30;
+  var ARTESANAIS = ["Tradicional","Chocolate com café","Red velvet"];
+
+  var carrinho = {}, sabores = {};
+  try {
+    var salvo = JSON.parse(localStorage.getItem(CHAVE) || "{}");
+    carrinho = salvo.c || {}; sabores = salvo.s || {};
+  } catch(e){}
+  function guardar(){
+    try { localStorage.setItem(CHAVE, JSON.stringify({c:carrinho,s:sabores})); } catch(e){}
+  }
+  function moeda(v){ return "R$ " + v.toFixed(2).replace(".", ","); }
+
+  /* catalogo lido do proprio HTML: nao ha lista duplicada para sair de sincronia */
+  var itens = {};
+  [].forEach.call(document.querySelectorAll(".it[data-id]"), function(li){
+    itens[li.dataset.id] = { nome: li.dataset.nome, preco: parseFloat(li.dataset.preco), el: li };
+  });
+
+  function el(id){ return document.getElementById(id); }
+  var montador = el("montador");
+
+  function mudar(id, d){
+    var n = (carrinho[id] || 0) + d;
+    if (n <= 0) delete carrinho[id]; else if (n <= 30) carrinho[id] = n;
+    guardar(); pintar();
+  }
+  [].forEach.call(document.querySelectorAll(".qtd"), function(box){
+    var id = box.dataset.qtd;
+    [].forEach.call(box.querySelectorAll(".qtd-b"), function(b){
+      b.addEventListener("click", function(){ mudar(id, parseInt(b.dataset.d,10)); });
+    });
+  });
+
+  /* montador do trio: um grupo de tres escolhas por caixa pedida */
+  function pintarMontador(){
+    var n = carrinho["trio-de-cookies"] || 0;
+    if (!montador) return;
+    if (!n){ montador.hidden = true; montador.innerHTML = ""; return; }
+    montador.hidden = false;
+    var html = "<p class=\"montador-titulo\">Escolha os sabores</p>";
+    for (var t = 0; t < n; t++){
+      html += "<div class=\"montador-grupo\">";
+      if (n > 1) html += "<p class=\"montador-rot\">Caixa " + (t+1) + "</p>";
+      html += "<div class=\"montador-selos\">";
+      for (var i = 0; i < 3; i++){
+        var chave = t + "-" + i;
+        var atual = sabores[chave] || ARTESANAIS[i];
+        html += "<select data-sab=\"" + chave + "\" aria-label=\"Sabor " + (i+1) + " da caixa " + (t+1) + "\">";
+        for (var k = 0; k < ARTESANAIS.length; k++){
+          html += "<option" + (ARTESANAIS[k] === atual ? " selected" : "") + ">" + ARTESANAIS[k] + "</option>";
+        }
+        html += "</select>";
+      }
+      html += "</div></div>";
+    }
+    montador.innerHTML = html;
+    [].forEach.call(montador.querySelectorAll("select"), function(sel){
+      sabores[sel.dataset.sab] = sel.value;
+      sel.addEventListener("change", function(){
+        sabores[sel.dataset.sab] = sel.value; guardar(); pintar();
+      });
+    });
+    guardar();
+  }
+
+  function frete(sub){
+    if (el("f-tipo").value === "retirada") return { valor:0, rotulo:"Retirada na loja", combinar:false };
+    var v = parseFloat(el("f-dist").value);
+    if (v === -1) return { valor:0, rotulo:"A combinar no WhatsApp", combinar:true };
+    if (v === -2) return { valor:0, rotulo:"A confirmar", combinar:true };
+    if (v === 0)  return { valor:0, rotulo:"Grátis (até 3 km)", combinar:false };
+    var livre = (v === 5) ? 60 : 80;
+    if (sub >= livre) return { valor:0, rotulo:"Grátis (pedido acima de " + moeda(livre) + ")", combinar:false };
+    return { valor:v, rotulo:moeda(v), combinar:false, livre:livre };
+  }
+
+  function pintar(){
+    var sub = 0, qtdTotal = 0, linhas = [];
+    Object.keys(itens).forEach(function(id){
+      var n = carrinho[id] || 0;
+      var box = document.querySelector(".qtd[data-qtd=\"" + id + "\"]");
+      if (box) box.querySelector(".qtd-n").textContent = n;
+      itens[id].el.classList.toggle("tem", n > 0);
+      if (n > 0){ sub += n * itens[id].preco; qtdTotal += n; linhas.push({ id:id, n:n }); }
+    });
+
+    pintarMontador();
+
+    var ul = el("resumo"); ul.innerHTML = "";
+    linhas.forEach(function(l){
+      var nome = l.n + "x " + itens[l.id].nome;
+      if (l.id === "trio-de-cookies"){
+        var lista = [];
+        for (var t = 0; t < l.n; t++){
+          var tr = [];
+          for (var i = 0; i < 3; i++) tr.push(sabores[t + "-" + i] || ARTESANAIS[i]);
+          lista.push(tr.join(", "));
+        }
+        nome += " (" + lista.join(" | ") + ")";
+      }
+      var li = document.createElement("li");
+      li.innerHTML = "<span class=\"r-nome\"></span><span class=\"r-val\">" + moeda(l.n * itens[l.id].preco) + "</span>";
+      li.querySelector(".r-nome").textContent = nome;
+      ul.appendChild(li);
+    });
+    el("vazio").hidden = linhas.length > 0;
+
+    var entrega = el("f-tipo").value === "entrega";
+    el("w-dist").hidden = !entrega;
+    el("w-end").hidden  = !entrega;
+    el("w-troco").hidden = el("f-pag").value !== "Dinheiro";
+
+    var f = frete(sub);
+    var total = sub + f.valor;
+    el("t-sub").textContent = moeda(sub);
+    el("t-ent-rot").textContent = entrega ? "Entrega" : "Retirada";
+    el("t-ent").textContent = linhas.length ? f.rotulo : "—";
+    el("t-tot").textContent = moeda(total);
+
+    /* quanto falta para o frete sair de graca: empurra o pedido para cima */
+    var pg = el("progresso");
+    if (entrega && f.livre && sub > 0){
+      pg.hidden = false; pg.classList.remove("ok");
+      el("progresso-txt").textContent = "Faltam " + moeda(f.livre - sub) + " para a entrega sair de graça.";
+      el("progresso-barra").style.width = Math.min(100, (sub / f.livre) * 100) + "%";
+    } else if (entrega && f.valor === 0 && sub > 0 && !f.combinar){
+      pg.hidden = false; pg.classList.add("ok");
+      el("progresso-txt").textContent = "Entrega grátis garantida.";
+      el("progresso-barra").style.width = "100%";
+    } else { pg.hidden = true; }
+
+    el("c-itens").textContent = qtdTotal + (qtdTotal === 1 ? " item" : " itens");
+    el("c-total").textContent = moeda(total);
+    el("carrinho").classList.toggle("on", qtdTotal > 0);
+
+    var enviar = el("enviar");
+    var falta = entrega && sub > 0 && sub < MINIMO;
+    el("aviso-min").hidden = !falta;
+    if (falta) el("aviso-min").textContent =
+      "O pedido mínimo para entrega é " + moeda(MINIMO) + ". Faltam " + moeda(MINIMO - sub) +
+      " — ou escolha retirada na loja.";
+    var ok = linhas.length > 0 && !falta;
+    enviar.setAttribute("aria-disabled", ok ? "false" : "true");
+    enviar.href = ok ? montarLink(linhas, sub, f, total) : "#";
+  }
+
+  function montarLink(linhas, sub, f, total){
+    var q = String.fromCharCode(10);
+    var t = "Olá! Quero fazer um pedido pelo site." + q + q;
+    linhas.forEach(function(l){
+      t += "• " + l.n + "x " + itens[l.id].nome;
+      if (l.id === "trio-de-cookies"){
+        for (var i = 0; i < l.n; i++){
+          var tr = [];
+          for (var j = 0; j < 3; j++) tr.push(sabores[i + "-" + j] || ARTESANAIS[j]);
+          t += q + "   caixa " + (i+1) + ": " + tr.join(", ");
+        }
+      }
+      t += " — " + moeda(l.n * itens[l.id].preco) + q;
+    });
+    t += q + "Subtotal: " + moeda(sub);
+    t += q + "Entrega: " + f.rotulo;
+    t += q + "Total: " + moeda(total) + (f.combinar ? " + entrega" : "");
+
+    var nome = el("f-nome").value.trim();
+    var end  = el("f-end").value.trim();
+    var pag  = el("f-pag").value;
+    var troco= el("f-troco").value.trim();
+    var obs  = el("f-obs").value.trim();
+    var entrega = el("f-tipo").value === "entrega";
+
+    t += q + q + (entrega ? "Entrega" : "Retirada na loja");
+    if (nome) t += q + "Nome: " + nome;
+    if (entrega && end) t += q + "Endereço: " + end;
+    t += q + "Pagamento: " + pag;
+    if (pag === "Dinheiro" && troco) t += " (troco para " + troco + ")";
+    if (obs) t += q + "Observação: " + obs;
+    return "https://wa.me/" + ZAP + "?text=" + encodeURIComponent(t);
+  }
+
+  ["f-nome","f-tipo","f-dist","f-end","f-pag","f-troco","f-obs"].forEach(function(id){
+    var c = el(id);
+    c.addEventListener("input", pintar);
+    c.addEventListener("change", pintar);
+  });
+
+  el("enviar").addEventListener("click", function(){
+    if (this.getAttribute("aria-disabled") === "true") return;
+    setTimeout(function(){
+      carrinho = {}; sabores = {};
+      el("f-obs").value = "";
+      guardar(); pintar();
+    }, 1500);
+  });
+
+  if ("IntersectionObserver" in window){
+    new IntersectionObserver(function(es){
+      es.forEach(function(e){ el("carrinho").classList.toggle("escondida", e.isIntersecting); });
+    }, { threshold: 0.12 }).observe(el("fechar"));
+  }
+
+  pintar();
 })();
 </script>
 </body>

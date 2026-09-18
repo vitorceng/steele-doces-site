@@ -244,6 +244,11 @@ main{padding:0 var(--gut) clamp(50px,8vh,90px)}
 /* nas listas sem foto a primeira coluna sai do grid, senão sobra um buraco
    do tamanho da miniatura na frente de cada bebida. */
 .grupo-curto .it{grid-template-columns:1fr auto}
+/* item de secao curta que ganhou foto: devolve a coluna da imagem */
+.grupo-curto .it-com-foto{grid-template-columns:96px 1fr auto}
+@media (max-width:600px){.grupo-curto .it-com-foto{grid-template-columns:72px 1fr auto}}
+/* foto que e retrato de verdade, nao recorte em fundo transparente */
+.it-foto-cheia{object-fit:cover;border-radius:2px}
 
 @media (max-width:600px){
   .it{grid-template-columns:72px 1fr auto;gap:14px;padding:16px 0}
@@ -539,8 +544,9 @@ main{padding:0 var(--gut) clamp(50px,8vh,90px)}
       <p class="grupo-nota">Para quebrar o doce. Vão ao forno junto com os cookies.</p>
     </div>
     <ul class="lista">
-    <li class="it it-simples" data-id="trio-de-biscoitos-de-queijo" data-nome="Trio de biscoitos de queijo" data-preco="15">
-      <div class="it-txt"><h3>Trio de biscoitos de queijo</h3></div>
+    <li class="it it-com-foto" data-id="trio-de-biscoitos-de-queijo" data-nome="Trio de biscoitos de queijo" data-preco="15">
+      <img class="it-foto it-foto-cheia" src="assets/sabores/biscoito-queijo.webp" alt="Três biscoitos de queijo assados, sobre o papel da marca Steele" width="264" height="264" loading="lazy" decoding="async">
+      <div class="it-txt"><h3>Trio de biscoitos de queijo</h3><p>Assados na hora, quentinhos. Vêm do forno junto com os cookies.</p></div>
       <div class="it-dir">
         <span class="it-preco">R$ 15,00</span>
         <div class="qtd" data-qtd="trio-de-biscoitos-de-queijo">

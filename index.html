@@ -31,7 +31,11 @@
   --ink:#333D28;
   --brand:#4A5539;
   --brand-dark:#3A4430;
+  --escuro:#2A3222;
   --gold:#8F6727;
+  /* o dourado escuro e o do texto, que precisa de contraste no creme. este aqui e
+     so para anel, disco e bolinha: peca grande, onde o tom escuro fica sujo. */
+  --gold-luz:#C79A46;
   --muted:#6A7360;
   --line:rgba(74,85,57,.20);
   --line-2:rgba(74,85,57,.38);
@@ -41,6 +45,7 @@
 
   --ease:cubic-bezier(.22,.61,.36,1);
   --gut:clamp(22px,5vw,84px);
+  --bar:66px;
 }
 
 *,*::before,*::after{box-sizing:border-box}
@@ -69,145 +74,161 @@ p{margin:0}
 .lede{color:var(--muted);max-width:46ch;font-size:1.02rem;margin-top:16px}
 .wrap{max-width:1220px;margin-inline:auto}
 
+/* selo de abertura de secao: o kicker dentro de uma capsula, com a bolinha na frente */
+.pill{display:inline-flex;align-items:center;gap:9px;padding:7px 17px;border-radius:999px;
+  border:1px solid var(--line-2);font-family:var(--body);font-weight:500;font-size:.68rem;
+  letter-spacing:.24em;text-transform:uppercase;color:var(--gold)}
+.pill::before{content:"";width:7px;height:7px;border-radius:50%;background:var(--gold-luz);flex:none}
+
 /* ---------- botões ---------- */
 .btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;
   font-family:var(--body);font-weight:500;font-size:.94rem;letter-spacing:.01em;
-  padding:15px 30px;border-radius:2px;border:1px solid var(--brand);
+  padding:15px 30px;border-radius:999px;border:1px solid var(--brand);
   background:var(--brand);color:var(--paper);text-decoration:none;cursor:pointer;
   transition:background .3s var(--ease),color .3s var(--ease),border-color .3s var(--ease)}
 .btn:hover{background:var(--brand-dark);border-color:var(--brand-dark)}
 .btn-ghost{background:transparent;color:var(--brand);border-color:var(--line-2)}
 .btn-ghost:hover{background:rgba(74,85,57,.07);border-color:var(--brand);color:var(--brand)}
-@media (pointer:coarse){.btn{min-height:48px;display:inline-flex;align-items:center;justify-content:center}}
+@media (pointer:coarse){.btn{min-height:48px}}
 
-/* ---------- barra que aparece depois do topo ---------- */
+/* ---------- barra fixa, sempre à vista ---------- */
 .bar{position:fixed;top:0;left:0;right:0;z-index:60;display:flex;align-items:center;
-  justify-content:space-between;gap:18px;padding:12px var(--gut);
+  justify-content:space-between;gap:18px;height:var(--bar);padding:0 var(--gut);
   background:rgba(251,245,236,.94);backdrop-filter:blur(12px);
-  border-bottom:1px solid var(--line);
-  transform:translateY(-102%);transition:transform .45s var(--ease)}
-.bar.on{transform:none}
-.bar img{width:96px}
-.bar-links{display:flex;align-items:center;gap:clamp(14px,2vw,30px)}
+  border-bottom:1px solid transparent;transition:border-color .35s var(--ease),box-shadow .35s var(--ease)}
+.bar.sombra{border-bottom-color:var(--line);box-shadow:0 8px 24px rgba(42,50,34,.06)}
+.bar img{width:92px}
+.bar-links{display:flex;align-items:center;gap:clamp(12px,1.8vw,26px)}
 .bar-links a:not(.btn){font-size:.86rem;text-decoration:none;color:var(--muted);
   transition:color .3s var(--ease)}
 .bar-links a:not(.btn):hover{color:var(--brand)}
-.bar .btn{padding:11px 20px;font-size:.86rem}
+.bar .btn{padding:11px 22px;font-size:.86rem}
+.bar .ig{display:inline-flex;color:var(--muted);transition:color .3s var(--ease)}
+.bar .ig:hover{color:var(--brand)}
+.bar .ig svg{width:19px;height:19px;display:block}
+@media (max-width:1040px){.bar-links .hide-md{display:none}}
 @media (max-width:820px){.bar-links .hide-sm{display:none}}
 
-/* ---------- TOPO: tela dividida ---------- */
-.topo{display:grid;grid-template-columns:46fr 54fr;min-height:100svh}
-/* a imagem é absoluta de propósito: com height:100% dentro de uma linha de grade
-   medida pelo conteúdo, ela volta para a própria proporção e passa a mandar na
-   altura do topo inteiro. Absoluta, ela preenche e quem manda é o painel de texto. */
-.topo-foto{position:relative;overflow:hidden;background:#2A3222}
-.topo-foto img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
-.topo-foto::after{content:"";position:absolute;inset:0;pointer-events:none;
-  background:linear-gradient(to bottom,rgba(26,31,20,.30) 0%,rgba(26,31,20,0) 34%,
-    rgba(26,31,20,.16) 60%,rgba(26,31,20,.78) 100%)}
-.foto-legenda{position:absolute;left:clamp(22px,3.4vw,52px);right:clamp(22px,3.4vw,52px);
-  bottom:clamp(28px,4vh,56px);z-index:1;color:#FBF5EC}
-.foto-legenda .q{font-family:var(--display);font-style:italic;font-weight:500;
-  font-size:clamp(1.4rem,2.3vw,2.05rem);line-height:1.22;
-  text-shadow:0 2px 14px rgba(20,24,14,.6)}
-.foto-legenda .sub{margin-top:12px;font-size:.70rem;font-weight:400;letter-spacing:.30em;
-  text-transform:uppercase;opacity:.9;text-shadow:0 1px 8px rgba(20,24,14,.7)}
+/* ---------- TOPO ---------- */
+.hero{position:relative;overflow:hidden;display:flex;align-items:center;min-height:100svh;
+  padding:calc(var(--bar) + clamp(26px,4vh,54px)) var(--gut) clamp(48px,7vh,92px)}
+/* bolinhas tom sobre tom no fundo do topo: dao textura sem competir com a foto */
+.bolhas{position:absolute;inset:0;z-index:0;pointer-events:none}
+.bolhas i{position:absolute;border-radius:50%;background:rgba(74,85,57,.05)}
+.hero-grid{position:relative;z-index:1;width:100%;max-width:1220px;margin-inline:auto;
+  display:grid;grid-template-columns:1.02fr .98fr;gap:clamp(30px,5vw,76px);align-items:center}
+.hero h1{font-size:clamp(2.2rem,4.4vw,3.6rem);max-width:13ch;margin-top:20px}
+/* a frase da marca vinha como legenda sobre a foto. no lugar dela, entra aqui embaixo
+   do titulo, que e onde o olho ja esta. */
+.assinatura{font-family:var(--display);font-style:italic;font-weight:500;color:var(--gold);
+  font-size:clamp(1.2rem,2vw,1.62rem);line-height:1.3;margin-top:12px;max-width:24ch}
+.hero .lede{max-width:44ch}
+.acoes{display:flex;gap:12px;flex-wrap:wrap;margin-top:clamp(22px,3vh,30px)}
 
-/* o espaçamento vertical é em vh de propósito: assim o topo cabe em uma tela
-   só em notebook e em monitor grande, sem empurrar a legenda da foto para fora. */
-.topo-texto{display:flex;flex-direction:column;justify-content:center;
-  padding:clamp(34px,4vh,60px) clamp(26px,4.6vw,92px)}
-.marca{width:clamp(140px,12vw,188px);margin-bottom:clamp(22px,3.4vh,40px)}
-.topo-texto h1{font-size:clamp(2rem,3.2vw,3.1rem);max-width:15ch}
-.topo-texto .lede{max-width:44ch;margin-top:16px}
 /* a oferta na primeira tela: o cliente decide pedir aqui ou no app ANTES de rolar.
    Sem preco e sem entrega visiveis, ele assume que e caro e vai para o iFood. */
-.ofertas{list-style:none;margin:clamp(24px,3.2vh,32px) 0 0;padding:0;display:grid;
-  grid-template-columns:repeat(3,1fr);gap:14px clamp(14px,2.2vw,30px)}
-@media (max-width:560px){.ofertas{grid-template-columns:1fr;gap:0}
-  .ofertas li{padding:11px 0;border-top:1px solid var(--line)}
-  .ofertas li:first-child{border-top:1px solid var(--line-2)}}
-.ofertas li{border-top:1px solid var(--line-2);padding-top:12px}
-.ofertas b{display:block;font-family:var(--display);font-weight:500;line-height:1.2;
-  font-size:clamp(1.02rem,1.5vw,1.24rem);color:var(--brand)}
-.ofertas span{display:block;margin-top:5px;font-size:.82rem;line-height:1.45;color:var(--muted)}
+.numeros{list-style:none;margin:clamp(26px,3.6vh,38px) 0 0;padding:clamp(20px,2.6vh,26px) 0 0;
+  border-top:1px solid var(--line);display:grid;grid-template-columns:repeat(3,1fr);
+  gap:14px clamp(14px,2.2vw,30px)}
+.numeros b{display:block;font-family:var(--display);font-weight:600;line-height:1.1;
+  font-size:clamp(1.5rem,2.6vw,2.1rem);color:var(--brand)}
+.numeros span{display:block;margin-top:4px;font-size:.81rem;line-height:1.4;color:var(--muted)}
+@media (max-width:560px){.numeros{grid-template-columns:1fr;gap:0;padding-top:6px}
+  .numeros li{display:flex;align-items:baseline;gap:10px;padding:10px 0;border-top:1px solid var(--line)}
+  .numeros b{font-size:1.32rem}
+  .numeros span{margin-top:0}}
 
-.acoes{display:flex;gap:12px;flex-wrap:wrap;margin-top:clamp(22px,3vh,32px)}
+/* foto redonda com anel, disco atras e a etiqueta flutuando */
+.hero-foto{position:relative;display:flex;align-items:center;justify-content:center;
+  padding:clamp(18px,3vw,40px)}
+.circulo{position:relative;z-index:1;width:min(100%,520px);aspect-ratio:1;border-radius:50%;
+  overflow:hidden;border:9px solid var(--gold-luz);box-shadow:0 26px 60px rgba(42,50,34,.22)}
+.circulo img{width:100%;height:100%;object-fit:cover}
+.disco{position:absolute;z-index:0;top:clamp(-6px,-.5vw,0px);left:clamp(-10px,1vw,18px);
+  width:clamp(96px,14vw,172px);aspect-ratio:1;border-radius:50%;background:var(--gold-luz);opacity:.9}
+.chip{position:absolute;z-index:2;left:0;bottom:clamp(18px,5vh,62px);
+  background:var(--paper);border:1px solid var(--line);border-radius:999px;
+  padding:11px 22px;font-family:var(--display);font-style:italic;font-weight:500;
+  font-size:clamp(.95rem,1.4vw,1.14rem);color:var(--brand);
+  box-shadow:0 14px 32px rgba(42,50,34,.16)}
 .canaizinhos{display:flex;align-items:center;gap:16px;flex-wrap:wrap;
-  margin-top:clamp(20px,2.6vh,28px);padding-top:clamp(16px,2vh,22px);
-  border-top:1px solid var(--line);font-size:.84rem;color:var(--muted)}
+  margin-top:clamp(20px,2.6vh,28px);font-size:.84rem;color:var(--muted)}
 .canaizinhos a{text-decoration:none;border-bottom:1px solid var(--line-2);padding-bottom:2px;
   transition:color .3s var(--ease),border-color .3s var(--ease)}
 .canaizinhos a:hover{color:var(--brand);border-color:var(--brand)}
 .canaizinhos .sep{opacity:.4}
 @media (max-width:900px){
-  .topo{grid-template-columns:1fr;min-height:0}
-  .topo-foto{height:min(58svh,460px)}
-  .topo-texto{padding:clamp(32px,7vw,48px) var(--gut) clamp(44px,7vw,56px)}
-  .marca{margin-bottom:26px}
+  .hero{min-height:0;padding-top:calc(var(--bar) + 30px)}
+  .hero-grid{grid-template-columns:1fr;gap:38px}
+  .hero-foto{order:-1;padding:10px 0 4px}
+  .circulo{width:min(78vw,380px);border-width:7px}
+  .chip{left:auto;right:2%;bottom:2%}
 }
 
 /* ---------- seções ---------- */
-/* scroll-margin um pouco menor que a altura da barra: a seção desliza por baixo dela
-   e não sobra fresta do topo escuro atrás. */
-.sec{padding:clamp(64px,9vh,124px) var(--gut);scroll-margin-top:80px}
+/* scroll-margin acompanha a barra fixa: a ancora nao para debaixo dela. */
+.sec{padding:clamp(64px,9vh,124px) var(--gut);scroll-margin-top:calc(var(--bar) + 8px)}
 .sec-paper2{background:var(--paper-2)}
 .h2{font-size:clamp(1.8rem,3vw,2.7rem);max-width:17ch}
-.mid{text-align:center}
-.mid .h2{max-width:22ch;margin-inline:auto}
-.mid .lede{margin-inline:auto;max-width:52ch}
 
-/* cardápio */
-.menu{display:grid;grid-template-columns:1.05fr .95fr;gap:clamp(34px,5vw,92px);align-items:start}
-.menu-cols{display:grid;grid-template-columns:repeat(2,1fr);gap:clamp(20px,3vw,44px);
-  margin-top:clamp(26px,4vh,40px)}
-.grupo h3{font-family:var(--body);font-weight:500;font-size:.70rem;letter-spacing:.26em;
-  text-transform:uppercase;color:var(--gold);margin-bottom:12px}
-.grupo ul{list-style:none;margin:0;padding:0}
-.grupo li{font-family:var(--display);font-size:1.1rem;color:var(--ink);
-  padding:8px 0;border-bottom:1px solid var(--line)}
-.menu-extra{margin-top:26px;color:var(--muted);font-size:.93rem;max-width:50ch}
-.menu-foto img{width:100%;border-radius:3px}
-
-/* ---------- vitrine de sabores ----------
-   A home mostrava so os nomes. Quem nunca comprou nao sabe o que e um
-   "Alpino Black" nem quanto custa, e ia embora para o app procurar. Foto e
-   preco na home respondem as duas perguntas antes do clique. */
-.trio-capa{display:grid;grid-template-columns:minmax(0,240px) 1fr;gap:clamp(18px,3vw,38px);
+/* trio em destaque, na faixa clara logo depois do topo */
+.trio-capa{display:grid;grid-template-columns:minmax(0,260px) 1fr;gap:clamp(18px,3vw,44px);
   align-items:center;background:var(--paper-2);border:1px solid var(--line);
-  border-left:3px solid var(--gold);padding:clamp(16px,2.2vw,26px);
-  margin-top:clamp(26px,4vh,40px)}
-.trio-capa img{width:100%;aspect-ratio:1;object-fit:cover;border-radius:2px;display:block}
+  border-radius:22px;padding:clamp(16px,2.4vw,30px)}
+.trio-capa img{width:100%;aspect-ratio:1;object-fit:cover;border-radius:16px;display:block}
 .trio-capa .selo{font-family:var(--body);font-weight:500;font-size:.66rem;letter-spacing:.20em;
   text-transform:uppercase;color:var(--gold);margin-bottom:6px}
-.trio-capa h3{font-family:var(--display);font-weight:500;font-size:clamp(1.3rem,2.4vw,1.9rem);
-  color:var(--brand);line-height:1.15}
-.trio-capa p{color:var(--muted);font-size:.95rem;margin-top:8px;max-width:44ch}
-.trio-capa .preco{font-family:var(--display);font-size:clamp(1.5rem,2.6vw,2rem);
-  color:var(--brand);margin-top:12px;display:block}
+.trio-capa h2{font-size:clamp(1.4rem,2.6vw,2.1rem);line-height:1.15}
+.trio-capa p{color:var(--muted);font-size:.97rem;margin-top:9px;max-width:46ch}
+.trio-capa .preco{font-family:var(--display);font-size:clamp(1.55rem,2.6vw,2.05rem);
+  color:var(--brand);margin-top:13px;display:block}
 .trio-capa .preco small{font-family:var(--body);font-size:.8rem;color:var(--muted);
   letter-spacing:.02em;margin-left:8px}
 .trio-capa .acoes{margin-top:16px}
 @media (max-width:640px){.trio-capa{grid-template-columns:1fr;gap:16px}
-  .trio-capa img{max-width:220px}}
+  .trio-capa img{max-width:240px}}
 
-/* tres colunas fixas: sao nove sabores, entao 3x3 fecha certinho. Com auto-fill
-   sobravam dois orfaos na ultima linha em quase toda largura. */
-.sabores{list-style:none;margin:clamp(24px,3.6vh,36px) 0 0;padding:0;display:grid;
-  grid-template-columns:repeat(3,1fr);gap:clamp(14px,2.2vw,26px)}
-.sabor a{display:block;text-decoration:none;color:inherit}
-.sabor img{width:100%;aspect-ratio:1;object-fit:cover;border-radius:2px;display:block;
-  background:var(--paper-2);transition:opacity .3s var(--ease)}
-.sabor a:hover img{opacity:.88}
-.sabor-nome{font-family:var(--display);font-size:1rem;color:var(--brand);
-  margin-top:10px;line-height:1.22}
-.sabor-preco{font-size:.86rem;color:var(--muted);margin-top:2px}
-.sabor a:hover .sabor-nome{text-decoration:underline;text-underline-offset:3px}
-@media (max-width:940px){
-  .menu{grid-template-columns:1fr;gap:34px}
-  .menu-foto{order:-1}
-}
-@media (max-width:520px){.menu-cols{grid-template-columns:1fr;gap:22px}}
+/* ---------- sabores: faixa escura com um card por sabor ----------
+   cada card tem a cor do proprio sabor. e o que segura a vitrine em pe enquanto
+   metade das fotos e recorte e metade e foto de verdade com fundo. */
+.escura{position:relative;overflow:hidden;background:var(--escuro);
+  padding:clamp(66px,9vh,126px) var(--gut);scroll-margin-top:calc(var(--bar) + 8px)}
+.escura .bolhas i{background:rgba(251,245,236,.045)}
+.escura .wrap{position:relative;z-index:1}
+.escura h2,.escura h3{color:var(--paper)}
+.escura .lede{color:rgba(251,245,236,.74)}
+.escura .pill{color:var(--gold-luz);border-color:rgba(199,154,70,.45)}
+
+.cards{list-style:none;margin:clamp(30px,4.4vh,50px) 0 0;padding:0;display:grid;
+  grid-template-columns:repeat(3,1fr);gap:clamp(13px,1.8vw,24px)}
+.card{position:relative;border-radius:22px;background:var(--c);
+  transition:transform .35s var(--ease),box-shadow .35s var(--ease)}
+.card a{display:block;text-decoration:none;color:#fff;padding:clamp(13px,1.5vw,18px)}
+.card:hover{transform:translateY(-5px);box-shadow:0 18px 40px rgba(0,0,0,.3)}
+.card-foto{background:var(--paper-2);border-radius:50%;width:min(88%,210px);aspect-ratio:1;
+  overflow:hidden;margin:clamp(4px,.8vw,10px) auto clamp(14px,1.7vw,20px)}
+.card-foto img{width:100%;height:100%;object-fit:cover}
+/* os recortes vem com fundo transparente: se cortar como foto, corta o cookie. */
+.card-foto.recorte img{object-fit:contain;padding:10%}
+.card-preco{position:absolute;top:clamp(21px,2.3vw,27px);right:clamp(21px,2.3vw,27px);z-index:2;
+  background:rgba(251,245,236,.95);color:var(--brand);border-radius:999px;
+  padding:5px 13px;font-size:.76rem;font-weight:500;line-height:1.5}
+.card h3{font-size:1.14rem}
+.card p{color:rgba(255,255,255,.78);font-size:.87rem;line-height:1.5;margin-top:5px}
+@media (max-width:900px){.cards{grid-template-columns:repeat(2,1fr)}}
+@media (max-width:520px){.cards{grid-template-columns:1fr}
+  .card a{display:grid;grid-template-columns:96px 1fr;gap:16px;align-items:center;padding:15px}
+  .card-foto{width:96px;margin:0}
+  .card-preco{top:14px;right:15px}
+  /* o preco flutua no canto: o titulo precisa parar antes dele */
+  .card h3{padding-right:74px}}
+
+.menu-extra{margin-top:clamp(26px,3.6vh,38px);color:rgba(251,245,236,.74);
+  font-size:.95rem;max-width:56ch}
+.escura .btn{background:var(--paper);color:var(--brand);border-color:var(--paper)}
+.escura .btn:hover{background:#fff;border-color:#fff}
+.escura .btn-ghost{background:transparent;color:var(--paper);border-color:rgba(251,245,236,.45)}
+.escura .btn-ghost:hover{background:rgba(251,245,236,.12);border-color:var(--paper);color:var(--paper)}
 
 /* faixa do recheio */
 .recheio{display:grid;grid-template-columns:1fr 1fr;gap:clamp(30px,5vw,80px);align-items:center}
@@ -225,11 +246,12 @@ p{margin:0}
 @media (max-width:760px){.provas{grid-template-columns:1fr;gap:26px}}
 
 /* onde comprar */
-.portas{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;margin-top:clamp(30px,4vh,48px);
-  background:var(--line);border:1px solid var(--line)}
-.porta{background:var(--paper);padding:26px 24px 30px;text-decoration:none;
-  display:flex;flex-direction:column;gap:7px;transition:background .3s var(--ease)}
-.porta:hover{background:var(--paper-2)}
+.portas{display:grid;grid-template-columns:repeat(4,1fr);gap:clamp(12px,1.6vw,18px);
+  margin-top:clamp(30px,4vh,48px)}
+.porta{background:var(--paper);border:1px solid var(--line);border-radius:18px;
+  padding:24px 22px 26px;text-decoration:none;display:flex;flex-direction:column;gap:7px;
+  transition:border-color .3s var(--ease),transform .3s var(--ease)}
+.porta:hover{border-color:var(--line-2);transform:translateY(-3px)}
 .porta .pn{font-family:var(--display);font-size:1.2rem;color:var(--brand)}
 .porta .pd{font-size:.88rem;color:var(--muted)}
 .porta .pg{margin-top:auto;padding-top:14px;font-size:.72rem;letter-spacing:.2em;
@@ -239,21 +261,33 @@ p{margin:0}
 
 /* eventos */
 .eventos{display:grid;grid-template-columns:1fr 1fr;gap:clamp(30px,5vw,84px);align-items:center}
-.eventos-img img{width:100%;border-radius:3px}
+.eventos-img img{width:100%;border-radius:22px}
 .evlista{list-style:none;margin:22px 0 30px;padding:0;display:flex;flex-direction:column;gap:9px}
 .evlista li{display:flex;gap:11px;color:var(--muted);font-size:.96rem}
 .evlista li::before{content:"";width:5px;height:5px;border-radius:50%;background:var(--gold);
   flex:none;margin-top:.62em}
 @media (max-width:900px){.eventos{grid-template-columns:1fr}.eventos-img{order:-1}}
 
+/* feed */
+.feed-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:clamp(10px,1.4vw,18px);
+  margin-top:clamp(28px,4vh,44px)}
+.feed-grid img{width:100%;aspect-ratio:1;object-fit:cover;border-radius:16px;
+  transition:opacity .3s var(--ease)}
+.feed-grid a:hover img{opacity:.86}
+.feed-link{display:block;text-align:center;margin-top:clamp(24px,3.4vh,34px);
+  font-family:var(--body);font-weight:500;font-size:.95rem;color:var(--brand);
+  text-decoration:none}
+.feed-link:hover{color:var(--gold)}
+@media (max-width:760px){.feed-grid{grid-template-columns:repeat(2,1fr)}}
+
 /* fechamento */
-.fim{position:relative;overflow:hidden;background:#2A3222;color:#FBF5EC;
+.fim{position:relative;overflow:hidden;background:var(--escuro);color:#FBF5EC;
   padding:clamp(64px,9vh,120px) var(--gut);text-align:center}
 .fim img.bg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:.24}
 .fim::after{content:"";position:absolute;inset:0;
   background:linear-gradient(to bottom,rgba(34,40,26,.72),rgba(34,40,26,.86))}
 .fim-inner{position:relative;z-index:1;max-width:620px;margin-inline:auto}
-.fim h2{color:#FBF5EC;font-size:clamp(1.8rem,3vw,2.7rem)}
+.fim h2{color:#FBF5EC;font-size:clamp(1.8rem,3vw,2.7rem);max-width:none}
 .fim p{color:rgba(251,245,236,.84);margin-top:16px}
 .fim .acoes{justify-content:center}
 .fim .btn{background:var(--paper);color:var(--brand);border-color:var(--paper)}
@@ -280,7 +314,6 @@ p{margin:0}
   *,*::before,*::after{animation-duration:.001ms !important;transition-duration:.001ms !important;
     transition-delay:0ms !important}
   .rv{opacity:1;transform:none}
-  .bar{transition:none}
 }
 </style>
 </head>
@@ -290,66 +323,77 @@ p{margin:0}
 <div class="bar" id="bar">
   <a href="#topo" aria-label="Steele Doces, início"><img src="assets/logo-escuro.webp" alt="Steele Doces" width="560" height="356"></a>
   <div class="bar-links">
+    <a href="#sabores" class="hide-sm">Sabores</a>
     <a href="cardapio.html" class="hide-sm">Cardápio</a>
-    <a href="#onde" class="hide-sm">Onde comprar</a>
-    <a href="#eventos" class="hide-sm">Eventos</a>
+    <a href="#onde" class="hide-md">Onde comprar</a>
+    <a href="#eventos" class="hide-md">Eventos</a>
+    <a href="#feed" class="hide-md">O feed</a>
+    <a class="ig" href="https://instagram.com/steeledoces" target="_blank" rel="noopener" aria-label="Instagram da Steele Doces">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true">
+        <rect x="3" y="3" width="18" height="18" rx="5"></rect>
+        <circle cx="12" cy="12" r="4"></circle>
+        <circle cx="17.2" cy="6.8" r="1.1" fill="currentColor" stroke="none"></circle>
+      </svg>
+    </a>
     <a class="btn" href="https://wa.me/5562986445333?text=Oi%21%20Vim%20pelo%20site%20da%20Steele%20e%20quero%20pedir%20cookies." target="_blank" rel="noopener">Pedir no WhatsApp</a>
   </div>
 </div>
 
-<header class="topo" id="topo">
-  <div class="topo-foto">
-    <img src="assets/trio.webp" alt="Três cookies Steele empilhados e partidos: tradicional, chocolate com café e red velvet" width="1000" height="1500" fetchpriority="high" decoding="async">
-    <div class="foto-legenda">
-      <p class="q">A massa não é doce.<br>É por isso que o recheio pode ser.</p>
-      <p class="sub">Goiânia e região</p>
-    </div>
+<header class="hero" id="topo">
+  <div class="bolhas" aria-hidden="true">
+    <i style="width:150px;height:150px;top:12%;left:-40px"></i>
+    <i style="width:86px;height:86px;top:66%;left:16%"></i>
+    <i style="width:210px;height:210px;bottom:-70px;right:34%"></i>
+    <i style="width:64px;height:64px;top:22%;right:6%"></i>
   </div>
 
-  <div class="topo-texto">
-    <img class="marca" src="assets/logo-escuro.webp" alt="Steele Doces" width="560" height="356" fetchpriority="high">
-    <p class="kicker">Cookies artesanais</p>
-    <h1>Assado na hora, depois que você pede.</h1>
-    <p class="lede">Nada fica esperando na prateleira. São nove cookies, do tradicional de gotas
-      ao Ferrero Rocher com o bombom inteiro dentro da massa.</p>
-    <ul class="ofertas">
-      <li><b>Trio por R$ 30</b><span>três sabores à sua escolha</span></li>
-      <li><b>Entrega grátis</b><span>até 3 km, a partir de R$ 30</span></li>
-      <li><b>Sem taxa de app</b><span>mais barato que no iFood</span></li>
-    </ul>
-    <div class="acoes">
-      <a class="btn" href="https://wa.me/5562986445333?text=Oi%21%20Vim%20pelo%20site%20da%20Steele%20e%20quero%20pedir%20cookies." target="_blank" rel="noopener">Pedir no WhatsApp</a>
-      <a class="btn btn-ghost" href="cardapio.html">Ver o cardápio</a>
+  <div class="hero-grid">
+    <div class="hero-texto">
+      <p class="pill">Cookies artesanais &middot; Goiânia</p>
+      <h1>Assado na hora, depois que você pede.</h1>
+      <p class="assinatura">A massa não é doce. É por isso que o recheio pode ser.</p>
+      <p class="lede">Nada fica esperando na prateleira. São nove cookies, do tradicional de gotas
+        ao Ferrero Rocher com o bombom inteiro dentro da massa.</p>
+      <div class="acoes">
+        <a class="btn" href="https://wa.me/5562986445333?text=Oi%21%20Vim%20pelo%20site%20da%20Steele%20e%20quero%20pedir%20cookies." target="_blank" rel="noopener">Pedir no WhatsApp</a>
+        <a class="btn btn-ghost" href="cardapio.html">Ver o cardápio</a>
+      </div>
+      <ul class="numeros">
+        <li><b>R$ 30</b><span>o trio de três sabores</span></li>
+        <li><b>Grátis</b><span>entrega até 3 km</span></li>
+        <li><b>0%</b><span>de taxa de aplicativo</span></li>
+      </ul>
+      <p class="canaizinhos">
+        <span>Também no</span>
+        <a href="https://www.ifood.com.br/delivery/aparecida-de-goiania-go/steele-doces-setor-dos-afonsos/37a289d9-2f6e-41f7-902d-703e732dee15" target="_blank" rel="noopener">iFood</a>
+        <span class="sep">·</span>
+        <a href="https://oia.99app.com/dlp9/rGX0HX?area=BR" target="_blank" rel="noopener">99Food</a>
+        <span class="sep">·</span>
+        <a href="https://instagram.com/steeledoces" target="_blank" rel="noopener">Instagram</a>
+      </p>
     </div>
-    <p class="canaizinhos">
-      <span>Também no</span>
-      <a href="https://www.ifood.com.br/delivery/aparecida-de-goiania-go/steele-doces-setor-dos-afonsos/37a289d9-2f6e-41f7-902d-703e732dee15" target="_blank" rel="noopener">iFood</a>
-      <span class="sep">·</span>
-      <a href="https://oia.99app.com/dlp9/rGX0HX?area=BR" target="_blank" rel="noopener">99Food</a>
-      <span class="sep">·</span>
-      <a href="https://instagram.com/steeledoces" target="_blank" rel="noopener">Instagram</a>
-    </p>
+
+    <div class="hero-foto">
+      <span class="disco" aria-hidden="true"></span>
+      <div class="circulo">
+        <img src="assets/trio.webp" alt="Três cookies Steele empilhados e partidos: tradicional, chocolate com café e red velvet" width="1000" height="1500" fetchpriority="high" decoding="async">
+      </div>
+      <p class="chip">Ainda quente.</p>
+    </div>
   </div>
 </header>
 
 <main id="main" tabindex="-1">
 
-  <!-- CARDÁPIO -->
-  <section class="sec" id="cardapio" aria-labelledby="h-cardapio">
+  <!-- TRIO EM DESTAQUE -->
+  <section class="sec" aria-labelledby="h-trio">
     <div class="wrap">
-      <div class="rv">
-        <p class="kicker">A linha</p>
-        <h2 class="h2" id="h-cardapio">Nove cookies. Um ponto só.</h2>
-        <p class="lede">Cada massa é ajustada sozinha, porque red velvet e cacau preto não assam
-          no mesmo tempo. O que elas têm em comum é o ponto.</p>
-      </div>
-
       <div class="trio-capa rv">
         <img src="assets/sabores/trio.webp" alt="Três cookies da Steele empilhados e mordidos, com o recheio à mostra"
              width="264" height="264" loading="lazy" decoding="async">
         <div>
           <p class="selo">Comece por aqui &middot; o mais pedido</p>
-          <h3>Trio de cookies</h3>
+          <h2 id="h-trio">Trio de cookies</h2>
           <p>Três artesanais à sua escolha, na caixa. Sai R$ 3 mais barato que comprar
             os três avulsos — e já dá direito à entrega grátis até 3 km.</p>
           <span class="preco">R$ 30,00 <small>os três</small></span>
@@ -358,77 +402,139 @@ p{margin:0}
           </p>
         </div>
       </div>
+    </div>
+  </section>
 
-      <ul class="sabores rv">
-      <li class="sabor">
-        <a href="cardapio.html#artesanais">
-          <img src="assets/sabores/tradicional.webp" alt="Cookie tradicional na mão, com gotas de chocolate" width="264" height="264" loading="lazy" decoding="async">
-          <span class="sabor-nome">Tradicional</span>
-          <span class="sabor-preco">R$ 10,00</span>
-        </a>
-      </li>
-      <li class="sabor">
-        <a href="cardapio.html#artesanais">
-          <img src="assets/sabores/cafe.webp" alt="Cookie de chocolate com café na mão" width="264" height="264" loading="lazy" decoding="async">
-          <span class="sabor-nome">Chocolate com café</span>
-          <span class="sabor-preco">R$ 11,00</span>
-        </a>
-      </li>
-      <li class="sabor">
-        <a href="cardapio.html#artesanais">
-          <img src="assets/sabores/redvelvet.webp" alt="Cookie red velvet na mão, com chocolate branco" width="264" height="264" loading="lazy" decoding="async">
-          <span class="sabor-nome">Red velvet</span>
-          <span class="sabor-preco">R$ 12,00</span>
-        </a>
-      </li>
-      <li class="sabor">
-        <a href="cardapio.html#artesanais">
-          <img src="assets/sabores/oreo.webp" alt="Cookie black oreo" width="264" height="264" loading="lazy" decoding="async">
-          <span class="sabor-nome">Black Oreo</span>
-          <span class="sabor-preco">R$ 18,00</span>
-        </a>
-      </li>
-      <li class="sabor">
-        <a href="cardapio.html#artesanais">
-          <img src="assets/sabores/nutella.webp" alt="Cookie black nutella partido, com o recheio escorrendo" width="264" height="264" loading="lazy" decoding="async">
-          <span class="sabor-nome">Black Nutella</span>
-          <span class="sabor-preco">R$ 21,00</span>
-        </a>
-      </li>
-      <li class="sabor">
-        <a href="cardapio.html#artesanais">
-          <img src="assets/sabores/raffaello.webp" alt="Cookie Raffaello" width="264" height="264" loading="lazy" decoding="async">
-          <span class="sabor-nome">Raffaello</span>
-          <span class="sabor-preco">R$ 24,00</span>
-        </a>
-      </li>
-      <li class="sabor">
-        <a href="cardapio.html#artesanais">
-          <img src="assets/sabores/ferrero.webp" alt="Cookie Ferrero Rocher" width="264" height="264" loading="lazy" decoding="async">
-          <span class="sabor-nome">Ferrero Rocher</span>
-          <span class="sabor-preco">R$ 25,00</span>
-        </a>
-      </li>
-      <li class="sabor">
-        <a href="cardapio.html#artesanais">
-          <img src="assets/sabores/brookie.webp" alt="Cookie brookie, metade cookie metade brownie" width="264" height="264" loading="lazy" decoding="async">
-          <span class="sabor-nome">Brookie</span>
-          <span class="sabor-preco">R$ 26,00</span>
-        </a>
-      </li>
-      <li class="sabor">
-        <a href="cardapio.html#artesanais">
-          <img src="assets/sabores/alpino.webp" alt="Cookie Alpino Black" width="264" height="264" loading="lazy" decoding="async">
-          <span class="sabor-nome">Alpino Black</span>
-          <span class="sabor-preco">R$ 29,00</span>
-        </a>
-      </li>
+  <!-- SABORES -->
+  <section class="escura" id="sabores" aria-labelledby="h-sabores">
+    <div class="bolhas" aria-hidden="true">
+      <i style="width:190px;height:190px;top:-50px;right:8%"></i>
+      <i style="width:110px;height:110px;top:40%;left:-30px"></i>
+      <i style="width:70px;height:70px;bottom:12%;right:22%"></i>
+    </div>
+    <div class="wrap">
+      <div class="rv">
+        <p class="pill">Os sabores</p>
+        <h2 class="h2" id="h-sabores" style="margin-top:16px">Nove cookies. Um ponto só.</h2>
+        <p class="lede">Cada massa é ajustada sozinha, porque red velvet e cacau preto não assam
+          no mesmo tempo. O que elas têm em comum é o ponto.</p>
+      </div>
+
+      <ul class="cards rv">
+        <li class="card" style="--c:#8A5F2C">
+          <span class="card-preco">R$ 10,00</span>
+          <a href="cardapio.html#artesanais">
+            <div class="card-foto">
+              <img src="assets/sabores/tradicional.webp" alt="Cookie tradicional na mão, com gotas de chocolate" width="264" height="264" loading="lazy" decoding="async">
+            </div>
+            <div class="card-txt">
+              <h3>Tradicional</h3>
+              <p>Massa amanteigada com gotas generosas. O ponto de referência da casa.</p>
+            </div>
+          </a>
+        </li>
+        <li class="card" style="--c:#5A3A28">
+          <span class="card-preco">R$ 11,00</span>
+          <a href="cardapio.html#artesanais">
+            <div class="card-foto">
+              <img src="assets/sabores/cafe.webp" alt="Cookie de chocolate com café na mão" width="264" height="264" loading="lazy" decoding="async">
+            </div>
+            <div class="card-txt">
+              <h3>Chocolate com café</h3>
+              <p>Cacau meio amargo com café na massa. Menos doce, mais fundo.</p>
+            </div>
+          </a>
+        </li>
+        <li class="card" style="--c:#8E2233">
+          <span class="card-preco">R$ 12,00</span>
+          <a href="cardapio.html#artesanais">
+            <div class="card-foto">
+              <img src="assets/sabores/redvelvet.webp" alt="Cookie red velvet na mão, com chocolate branco" width="264" height="264" loading="lazy" decoding="async">
+            </div>
+            <div class="card-txt">
+              <h3>Red velvet</h3>
+              <p>Massa aveludada com chocolate branco. Doçura curta, cor inteira.</p>
+            </div>
+          </a>
+        </li>
+        <li class="card" style="--c:#232323">
+          <span class="card-preco">R$ 18,00</span>
+          <a href="cardapio.html#gourmets">
+            <div class="card-foto recorte">
+              <img src="assets/sabores/oreo.webp" alt="Cookie black oreo" width="264" height="264" loading="lazy" decoding="async">
+            </div>
+            <div class="card-txt">
+              <h3>Black Oreo</h3>
+              <p>Cacau preto, creme e Oreo por dentro e por cima.</p>
+            </div>
+          </a>
+        </li>
+        <li class="card" style="--c:#3E2A1C">
+          <span class="card-preco">R$ 21,00</span>
+          <a href="cardapio.html#recheados">
+            <div class="card-foto recorte">
+              <img src="assets/sabores/nutella.webp" alt="Cookie black nutella partido, com o recheio escorrendo" width="264" height="264" loading="lazy" decoding="async">
+            </div>
+            <div class="card-txt">
+              <h3>Black Nutella</h3>
+              <p>Massa de cacau preto, Nutella escorrendo no meio.</p>
+            </div>
+          </a>
+        </li>
+        <li class="card" style="--c:#6E6350">
+          <span class="card-preco">R$ 24,00</span>
+          <a href="cardapio.html#gourmets">
+            <div class="card-foto recorte">
+              <img src="assets/sabores/raffaello.webp" alt="Cookie Raffaello" width="264" height="264" loading="lazy" decoding="async">
+            </div>
+            <div class="card-txt">
+              <h3>Raffaello</h3>
+              <p>Coco e chocolate branco na massa, com o bombom Raffaello inteiro no meio.</p>
+            </div>
+          </a>
+        </li>
+        <li class="card" style="--c:#7A4E1E">
+          <span class="card-preco">R$ 25,00</span>
+          <a href="cardapio.html#gourmets">
+            <div class="card-foto recorte">
+              <img src="assets/sabores/ferrero.webp" alt="Cookie Ferrero Rocher" width="264" height="264" loading="lazy" decoding="async">
+            </div>
+            <div class="card-txt">
+              <h3>Ferrero Rocher</h3>
+              <p>O bombom inteiro dentro da massa de chocolate, com avelã triturada.</p>
+            </div>
+          </a>
+        </li>
+        <li class="card" style="--c:#4A3220">
+          <span class="card-preco">R$ 26,00</span>
+          <a href="cardapio.html#recheados">
+            <div class="card-foto recorte">
+              <img src="assets/sabores/brookie.webp" alt="Cookie brookie, metade cookie metade brownie" width="264" height="264" loading="lazy" decoding="async">
+            </div>
+            <div class="card-txt">
+              <h3>Brookie</h3>
+              <p>Cookie e brownie na mesma mordida. O recheio é brownie de verdade.</p>
+            </div>
+          </a>
+        </li>
+        <li class="card" style="--c:#24303F">
+          <span class="card-preco">R$ 29,00</span>
+          <a href="cardapio.html#gourmets">
+            <div class="card-foto recorte">
+              <img src="assets/sabores/alpino.webp" alt="Cookie Alpino Black" width="264" height="264" loading="lazy" decoding="async">
+            </div>
+            <div class="card-txt">
+              <h3>Alpino Black</h3>
+              <p>Massa black com gotas de chocolate branco e recheio cremoso.</p>
+            </div>
+          </a>
+        </li>
       </ul>
 
       <p class="menu-extra rv">Tem ainda CupCookie, biscoito de queijo e, de vez em quando, uma
         edição limitada como o Junino. O cardápio completo, com tudo e os preços, abre em uma
         página só — e dá para montar o pedido inteiro por lá.</p>
-      <p class="acoes rv" style="margin-top:18px">
+      <p class="acoes rv">
         <a class="btn" href="cardapio.html">Abrir o cardápio</a>
         <a class="btn btn-ghost" href="https://www.ifood.com.br/delivery/aparecida-de-goiania-go/steele-doces-setor-dos-afonsos/37a289d9-2f6e-41f7-902d-703e732dee15" target="_blank" rel="noopener">Ver no iFood</a>
       </p>
@@ -436,7 +542,7 @@ p{margin:0}
   </section>
 
   <!-- O RECHEIO -->
-  <section class="sec sec-paper2" aria-labelledby="h-recheio">
+  <section class="sec" id="recheio" aria-labelledby="h-recheio">
     <div class="wrap recheio">
       <div class="rv">
         <p class="kicker">Por dentro</p>
@@ -453,7 +559,7 @@ p{margin:0}
   </section>
 
   <!-- TRÊS PROVAS -->
-  <section class="sec" aria-labelledby="h-provas">
+  <section class="sec sec-paper2" aria-labelledby="h-provas">
     <div class="wrap">
       <div class="rv">
         <p class="kicker">Antes de pedir</p>
@@ -480,7 +586,7 @@ p{margin:0}
   </section>
 
   <!-- ONDE COMPRAR -->
-  <section class="sec sec-paper2" id="onde" aria-labelledby="h-onde">
+  <section class="sec" id="onde" aria-labelledby="h-onde">
     <div class="wrap">
       <div class="rv">
         <p class="kicker">Onde achar</p>
@@ -515,7 +621,7 @@ p{margin:0}
   </section>
 
   <!-- EVENTOS -->
-  <section class="sec" id="eventos" aria-labelledby="h-eventos">
+  <section class="sec sec-paper2" id="eventos" aria-labelledby="h-eventos">
     <div class="wrap eventos">
       <div class="rv">
         <p class="kicker">Sob encomenda</p>
@@ -534,6 +640,37 @@ p{margin:0}
         <img src="assets/caixa.webp" alt="Caixa verde da Steele Doces com três cookies sobre o papel da marca"
              width="1300" height="1180" loading="lazy" decoding="async">
       </div>
+    </div>
+  </section>
+
+  <!-- FEED -->
+  <section class="sec" id="feed" aria-labelledby="h-feed">
+    <div class="wrap">
+      <div class="rv">
+        <p class="kicker">O feed</p>
+        <h2 class="h2" id="h-feed">Direto do forno para a sua tela.</h2>
+        <p class="lede">Todas as fotos são da nossa cozinha, sem banco de imagem. O que saiu hoje
+          e os sabores da semana ficam no Instagram.</p>
+      </div>
+      <div class="feed-grid rv">
+        <a href="https://instagram.com/steeledoces" target="_blank" rel="noopener" aria-label="Instagram da Steele Doces">
+          <img src="assets/cookie-real.webp" alt="Metades de cookie empilhadas com o recheio à mostra" width="928" height="1200" loading="lazy" decoding="async"></a>
+        <a href="https://instagram.com/steeledoces" target="_blank" rel="noopener" aria-label="Instagram da Steele Doces">
+          <img src="assets/caixa.webp" alt="Caixa da Steele com três cookies" width="1300" height="1180" loading="lazy" decoding="async"></a>
+        <a href="https://instagram.com/steeledoces" target="_blank" rel="noopener" aria-label="Instagram da Steele Doces">
+          <img src="assets/sabores/trio.webp" alt="Trio de cookies mordidos" width="264" height="264" loading="lazy" decoding="async"></a>
+        <a href="https://instagram.com/steeledoces" target="_blank" rel="noopener" aria-label="Instagram da Steele Doces">
+          <img src="assets/sabores/cupcookie.webp" alt="CupCookie no copo, com a tampa recheada" width="264" height="264" loading="lazy" decoding="async"></a>
+        <a href="https://instagram.com/steeledoces" target="_blank" rel="noopener" aria-label="Instagram da Steele Doces">
+          <img src="assets/sabores/biscoito-queijo.webp" alt="Trio de biscoitos de queijo" width="264" height="264" loading="lazy" decoding="async"></a>
+        <a href="https://instagram.com/steeledoces" target="_blank" rel="noopener" aria-label="Instagram da Steele Doces">
+          <img src="assets/sabores/redvelvet.webp" alt="Cookie red velvet na mão" width="264" height="264" loading="lazy" decoding="async"></a>
+        <a href="https://instagram.com/steeledoces" target="_blank" rel="noopener" aria-label="Instagram da Steele Doces">
+          <img src="assets/sabores.webp" alt="Vários cookies da Steele lado a lado" width="1200" height="900" loading="lazy" decoding="async"></a>
+        <a href="https://instagram.com/steeledoces" target="_blank" rel="noopener" aria-label="Instagram da Steele Doces">
+          <img src="assets/grade.webp" alt="Cookies na grade, saindo do forno" width="1200" height="1600" loading="lazy" decoding="async"></a>
+      </div>
+      <a class="feed-link rv" href="https://instagram.com/steeledoces" target="_blank" rel="noopener">Tem muito mais no @steeledoces &rarr;</a>
     </div>
   </section>
 
@@ -568,18 +705,15 @@ p{margin:0}
 <script>
 (function(){
   "use strict";
-  /* barra do topo aparece depois que a tela dividida sai */
+  /* a barra fica visivel desde o topo; a sombra so entra depois que a pagina anda,
+     para nao cortar o topo com uma linha dura logo de cara */
   var bar = document.getElementById('bar');
-  var topo = document.getElementById('topo');
-  var ligada = false;
+  var comSombra = false;
   function verBarra(){
-    /* limiar maior que o scroll-margin das seções: assim um clique no menu
-       já deixa a barra acesa, em vez de mostrar uma faixa do topo atrás dela */
-    var passou = topo.getBoundingClientRect().bottom < 120;
-    if (passou !== ligada){ ligada = passou; bar.classList.toggle('on', passou); }
+    var passou = window.scrollY > 12;
+    if (passou !== comSombra){ comSombra = passou; bar.classList.toggle('sombra', passou); }
   }
   window.addEventListener('scroll', verBarra, {passive:true});
-  window.addEventListener('resize', verBarra);
   verBarra();
 
   /* entradas suaves */

@@ -168,6 +168,41 @@ p{margin:0}
   padding:8px 0;border-bottom:1px solid var(--line)}
 .menu-extra{margin-top:26px;color:var(--muted);font-size:.93rem;max-width:50ch}
 .menu-foto img{width:100%;border-radius:3px}
+
+/* ---------- vitrine de sabores ----------
+   A home mostrava so os nomes. Quem nunca comprou nao sabe o que e um
+   "Alpino Black" nem quanto custa, e ia embora para o app procurar. Foto e
+   preco na home respondem as duas perguntas antes do clique. */
+.trio-capa{display:grid;grid-template-columns:minmax(0,240px) 1fr;gap:clamp(18px,3vw,38px);
+  align-items:center;background:var(--paper-2);border:1px solid var(--line);
+  border-left:3px solid var(--gold);padding:clamp(16px,2.2vw,26px);
+  margin-top:clamp(26px,4vh,40px)}
+.trio-capa img{width:100%;aspect-ratio:1;object-fit:cover;border-radius:2px;display:block}
+.trio-capa .selo{font-family:var(--body);font-weight:500;font-size:.66rem;letter-spacing:.20em;
+  text-transform:uppercase;color:var(--gold);margin-bottom:6px}
+.trio-capa h3{font-family:var(--display);font-weight:500;font-size:clamp(1.3rem,2.4vw,1.9rem);
+  color:var(--brand);line-height:1.15}
+.trio-capa p{color:var(--muted);font-size:.95rem;margin-top:8px;max-width:44ch}
+.trio-capa .preco{font-family:var(--display);font-size:clamp(1.5rem,2.6vw,2rem);
+  color:var(--brand);margin-top:12px;display:block}
+.trio-capa .preco small{font-family:var(--body);font-size:.8rem;color:var(--muted);
+  letter-spacing:.02em;margin-left:8px}
+.trio-capa .acoes{margin-top:16px}
+@media (max-width:640px){.trio-capa{grid-template-columns:1fr;gap:16px}
+  .trio-capa img{max-width:220px}}
+
+/* tres colunas fixas: sao nove sabores, entao 3x3 fecha certinho. Com auto-fill
+   sobravam dois orfaos na ultima linha em quase toda largura. */
+.sabores{list-style:none;margin:clamp(24px,3.6vh,36px) 0 0;padding:0;display:grid;
+  grid-template-columns:repeat(3,1fr);gap:clamp(14px,2.2vw,26px)}
+.sabor a{display:block;text-decoration:none;color:inherit}
+.sabor img{width:100%;aspect-ratio:1;object-fit:cover;border-radius:2px;display:block;
+  background:var(--paper-2);transition:opacity .3s var(--ease)}
+.sabor a:hover img{opacity:.88}
+.sabor-nome{font-family:var(--display);font-size:1rem;color:var(--brand);
+  margin-top:10px;line-height:1.22}
+.sabor-preco{font-size:.86rem;color:var(--muted);margin-top:2px}
+.sabor a:hover .sabor-nome{text-decoration:underline;text-underline-offset:3px}
 @media (max-width:940px){
   .menu{grid-template-columns:1fr;gap:34px}
   .menu-foto{order:-1}
@@ -301,60 +336,102 @@ p{margin:0}
 
   <!-- CARDÁPIO -->
   <section class="sec" id="cardapio" aria-labelledby="h-cardapio">
-    <div class="wrap menu">
+    <div class="wrap">
       <div class="rv">
         <p class="kicker">A linha</p>
         <h2 class="h2" id="h-cardapio">Nove cookies. Um ponto só.</h2>
         <p class="lede">Cada massa é ajustada sozinha, porque red velvet e cacau preto não assam
           no mesmo tempo. O que elas têm em comum é o ponto.</p>
+      </div>
 
-        <div class="menu-cols">
-          <div class="grupo">
-            <h3>Artesanais</h3>
-            <ul>
-              <li>Tradicional</li>
-              <li>Chocolate com café</li>
-              <li>Red velvet</li>
-            </ul>
-          </div>
-          <div class="grupo">
-            <h3>Recheados</h3>
-            <ul>
-              <li>Black Nutella</li>
-              <li>Brookie</li>
-            </ul>
-          </div>
-          <div class="grupo">
-            <h3>Gourmets</h3>
-            <ul>
-              <li>Black Oreo</li>
-              <li>Raffaello</li>
-              <li>Ferrero Rocher</li>
-              <li>Alpino Black</li>
-            </ul>
-          </div>
-          <div class="grupo">
-            <h3>E ainda</h3>
-            <ul>
-              <li>Trio de cookies</li>
-              <li>Cupcookie</li>
-              <li>Biscoito de queijo</li>
-            </ul>
-          </div>
+      <div class="trio-capa rv">
+        <img src="assets/sabores/trio.webp" alt="Três cookies da Steele empilhados e mordidos, com o recheio à mostra"
+             width="264" height="264" loading="lazy" decoding="async">
+        <div>
+          <p class="selo">Comece por aqui &middot; o mais pedido</p>
+          <h3>Trio de cookies</h3>
+          <p>Três artesanais à sua escolha, na caixa. Sai R$ 3 mais barato que comprar
+            os três avulsos — e já dá direito à entrega grátis até 3 km.</p>
+          <span class="preco">R$ 30,00 <small>os três</small></span>
+          <p class="acoes">
+            <a class="btn" href="cardapio.html#artesanais">Montar meu trio</a>
+          </p>
         </div>
-
-        <p class="menu-extra">De vez em quando entra uma edição limitada, como o Junino. O cardápio
-          completo, com os preços, abre em uma página só.</p>
-        <p class="acoes" style="margin-top:18px">
-          <a class="btn" href="cardapio.html">Abrir o cardápio</a>
-          <a class="btn btn-ghost" href="https://www.ifood.com.br/delivery/aparecida-de-goiania-go/steele-doces-setor-dos-afonsos/37a289d9-2f6e-41f7-902d-703e732dee15" target="_blank" rel="noopener">Ver no iFood</a>
-        </p>
       </div>
 
-      <div class="menu-foto rv">
-        <img src="assets/sabores.webp" alt="Nove cookies Steele vistos de cima, cada um com uma cobertura diferente"
-             width="1400" height="1866" loading="lazy" decoding="async">
-      </div>
+      <ul class="sabores rv">
+      <li class="sabor">
+        <a href="cardapio.html#artesanais">
+          <img src="assets/sabores/tradicional.webp" alt="Cookie tradicional na mão, com gotas de chocolate" width="264" height="264" loading="lazy" decoding="async">
+          <span class="sabor-nome">Tradicional</span>
+          <span class="sabor-preco">R$ 10,00</span>
+        </a>
+      </li>
+      <li class="sabor">
+        <a href="cardapio.html#artesanais">
+          <img src="assets/sabores/cafe.webp" alt="Cookie de chocolate com café na mão" width="264" height="264" loading="lazy" decoding="async">
+          <span class="sabor-nome">Chocolate com café</span>
+          <span class="sabor-preco">R$ 11,00</span>
+        </a>
+      </li>
+      <li class="sabor">
+        <a href="cardapio.html#artesanais">
+          <img src="assets/sabores/redvelvet.webp" alt="Cookie red velvet na mão, com chocolate branco" width="264" height="264" loading="lazy" decoding="async">
+          <span class="sabor-nome">Red velvet</span>
+          <span class="sabor-preco">R$ 12,00</span>
+        </a>
+      </li>
+      <li class="sabor">
+        <a href="cardapio.html#artesanais">
+          <img src="assets/sabores/oreo.webp" alt="Cookie black oreo" width="264" height="264" loading="lazy" decoding="async">
+          <span class="sabor-nome">Black Oreo</span>
+          <span class="sabor-preco">R$ 18,00</span>
+        </a>
+      </li>
+      <li class="sabor">
+        <a href="cardapio.html#artesanais">
+          <img src="assets/sabores/nutella.webp" alt="Cookie black nutella partido, com o recheio escorrendo" width="264" height="264" loading="lazy" decoding="async">
+          <span class="sabor-nome">Black Nutella</span>
+          <span class="sabor-preco">R$ 21,00</span>
+        </a>
+      </li>
+      <li class="sabor">
+        <a href="cardapio.html#artesanais">
+          <img src="assets/sabores/raffaello.webp" alt="Cookie Raffaello" width="264" height="264" loading="lazy" decoding="async">
+          <span class="sabor-nome">Raffaello</span>
+          <span class="sabor-preco">R$ 24,00</span>
+        </a>
+      </li>
+      <li class="sabor">
+        <a href="cardapio.html#artesanais">
+          <img src="assets/sabores/ferrero.webp" alt="Cookie Ferrero Rocher" width="264" height="264" loading="lazy" decoding="async">
+          <span class="sabor-nome">Ferrero Rocher</span>
+          <span class="sabor-preco">R$ 25,00</span>
+        </a>
+      </li>
+      <li class="sabor">
+        <a href="cardapio.html#artesanais">
+          <img src="assets/sabores/brookie.webp" alt="Cookie brookie, metade cookie metade brownie" width="264" height="264" loading="lazy" decoding="async">
+          <span class="sabor-nome">Brookie</span>
+          <span class="sabor-preco">R$ 26,00</span>
+        </a>
+      </li>
+      <li class="sabor">
+        <a href="cardapio.html#artesanais">
+          <img src="assets/sabores/alpino.webp" alt="Cookie Alpino Black" width="264" height="264" loading="lazy" decoding="async">
+          <span class="sabor-nome">Alpino Black</span>
+          <span class="sabor-preco">R$ 29,00</span>
+        </a>
+      </li>
+      </ul>
+
+      <p class="menu-extra rv">Tem ainda CupCookie, biscoito de queijo e, de vez em quando, uma
+        edição limitada como o Junino. O cardápio completo, com tudo e os preços, abre em uma
+        página só — e dá para montar o pedido inteiro por lá.</p>
+      <p class="acoes rv" style="margin-top:18px">
+        <a class="btn" href="cardapio.html">Abrir o cardápio</a>
+        <a class="btn btn-ghost" href="https://www.ifood.com.br/delivery/aparecida-de-goiania-go/steele-doces-setor-dos-afonsos/37a289d9-2f6e-41f7-902d-703e732dee15" target="_blank" rel="noopener">Ver no iFood</a>
+      </p>
     </div>
   </section>
 

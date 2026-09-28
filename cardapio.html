@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Cardápio | Steele Doces</title>
-<meta name="description" content="Cardápio completo da Steele Doces com os preços de venda direta: nove cookies artesanais, recheados e gourmets, CupCookies, bolos por fatia, cafés e bebidas. Peça no WhatsApp.">
+<meta name="description" content="Cardápio completo da Steele Doces com os preços de venda direta: nove cookies artesanais, recheados e gourmets, CupCookies, bolos individuais e bebidas. Peça no WhatsApp.">
 <meta name="theme-color" content="#FBF5EC">
 <link rel="icon" type="image/png" sizes="32x32" href="assets/icone-32.png">
 <link rel="icon" type="image/png" sizes="192x192" href="assets/icone-192.png">
@@ -128,27 +128,18 @@ ul{margin:0;padding:0;list-style:none}
 main{padding:0 var(--gut) clamp(50px,8vh,90px)}
 .grupo{max-width:900px;margin:clamp(40px,7vh,78px) auto 0;
   scroll-margin-top:calc(var(--topo-altura) + 16px)}
-/* uma foto por secao, no lugar de uma por item: a lista fica de ler e a foto
-   trabalha como abertura de capitulo. */
-.grupo-capa{margin:0 0 clamp(16px,2.4vh,24px);border-radius:16px;overflow:hidden;
-  background:var(--paper-2);aspect-ratio:16/6}
-.grupo-capa img{width:100%;height:100%;object-fit:cover;object-position:center 45%}
-.grupo-curto .grupo-capa{max-width:560px}
-@media (max-width:600px){.grupo-capa{aspect-ratio:16/9;border-radius:12px}}
 .grupo-topo{padding-bottom:18px;border-bottom:1px solid var(--line-2)}
 .grupo-topo h2{font-size:clamp(1.5rem,3.2vw,2.05rem)}
 .grupo-nota{color:var(--muted);font-size:.95rem;margin-top:8px;max-width:56ch}
 
-.it{display:grid;grid-template-columns:1fr auto;gap:clamp(14px,2.2vw,26px);
+.it{display:grid;grid-template-columns:96px 1fr auto;gap:clamp(14px,2.2vw,26px);
   align-items:center;padding:20px 0;border-bottom:1px solid var(--line)}
+.it-foto{width:96px;height:96px;object-fit:contain;object-position:center}
+.it-foto-vazia{width:96px;height:96px;display:block}
 .it-txt h3{font-size:1.12rem}
 .it-txt p{color:var(--muted);font-size:.92rem;margin-top:4px}
 .it-dir{display:flex;flex-direction:column;align-items:flex-end;gap:6px}
 .it-preco{font-family:var(--display);font-size:1.12rem;color:var(--brand);white-space:nowrap}
-/* sem preco fechado ainda: aparece na carta, mas sem botao, para nao entrar no
-   carrinho com valor inventado. */
-.it-breve .it-preco{font-family:var(--body);font-size:.84rem;letter-spacing:.14em;
-  text-transform:uppercase;color:var(--gold)}
 
 /* ---------- seletor de quantidade ---------- */
 .qtd{display:inline-flex;align-items:center;gap:2px;margin-top:8px;
@@ -167,6 +158,7 @@ main{padding:0 var(--gut) clamp(50px,8vh,90px)}
 /* o Trio e a porta de entrada: vem primeiro e precisa parecer a escolha obvia */
 .it-destaque{background:var(--paper-2);border:1px solid var(--line-2);
   border-left:3px solid var(--gold);padding:16px;margin-bottom:6px;flex-wrap:wrap}
+.it-destaque .it-foto{width:120px;height:120px;object-fit:cover;border-radius:2px}
 .it-selo{font-family:var(--body);font-weight:500;font-size:.66rem;letter-spacing:.20em;
   text-transform:uppercase;color:var(--gold);margin-bottom:5px}
 .it-destaque h3{font-size:1.28rem}
@@ -182,7 +174,8 @@ main{padding:0 var(--gut) clamp(50px,8vh,90px)}
 .montador-selos select{font-family:var(--body);font-size:.88rem;color:var(--ink);background:#fff;
   border:1px solid var(--line-2);border-radius:2px;padding:9px 8px;width:100%}
 .montador-selos select:focus-visible{outline:2px solid var(--gold);outline-offset:1px}
-@media (max-width:520px){.montador-selos{grid-template-columns:1fr;gap:6px}}
+@media (max-width:520px){.montador-selos{grid-template-columns:1fr;gap:6px}
+  .it-destaque .it-foto{width:96px;height:96px}}
 
 /* ---------- barra fixa do carrinho ---------- */
 .carrinho{position:fixed;left:0;right:0;bottom:0;z-index:60;
@@ -250,9 +243,16 @@ main{padding:0 var(--gut) clamp(50px,8vh,90px)}
 
 /* nas listas sem foto a primeira coluna sai do grid, senão sobra um buraco
    do tamanho da miniatura na frente de cada bebida. */
+.grupo-curto .it{grid-template-columns:1fr auto}
+/* item de secao curta que ganhou foto: devolve a coluna da imagem */
+.grupo-curto .it-com-foto{grid-template-columns:96px 1fr auto}
+@media (max-width:600px){.grupo-curto .it-com-foto{grid-template-columns:72px 1fr auto}}
+/* foto que e retrato de verdade, nao recorte em fundo transparente */
+.it-foto-cheia{object-fit:cover;border-radius:2px}
 
 @media (max-width:600px){
-  .it{gap:14px;padding:16px 0}
+  .it{grid-template-columns:72px 1fr auto;gap:14px;padding:16px 0}
+  .it-foto,.it-foto-vazia{width:72px;height:72px}
   .it-txt h3{font-size:1.02rem}
   .it-txt p{font-size:.86rem}
   .it-preco{font-size:1rem}
@@ -304,9 +304,8 @@ main{padding:0 var(--gut) clamp(50px,8vh,90px)}
 <header class="capa">
   <p class="kicker">Cardápio</p>
   <h1>Tudo o que sai do forno.</h1>
-  <p class="capa-sub">Os cookies são assados depois que você pede, e agora tem bolo por fatia e
-    café para tomar junto. Escolha aqui e mande a mensagem: a gente confirma o tempo e o valor
-    da entrega na hora.</p>
+  <p class="capa-sub">Os cookies são assados depois que você pede. Escolha aqui e mande a mensagem:
+    a gente confirma o tempo e o valor da entrega na hora.</p>
   <div class="aviso">
     <p><strong>Estes são os preços de venda direta.</strong> Nos aplicativos o valor é mais alto
       por causa das taxas da plataforma. Pedindo no WhatsApp você paga o preço desta página.</p>
@@ -333,24 +332,20 @@ main{padding:0 var(--gut) clamp(50px,8vh,90px)}
     <a href="#recheados">Recheados</a>
     <a href="#gourmets">Gourmets</a>
     <a href="#cup">CupCookies</a>
-    <a href="#bolos">Bolos</a>
     <a href="#salgados">Salgados</a>
-    <a href="#cafes">Cafés</a>
     <a href="#bebidas">Bebidas</a>
 </nav>
 
 <main id="main" tabindex="-1">
 
   <section class="grupo" id="artesanais" aria-labelledby="h-artesanais">
-    <figure class="grupo-capa">
-      <img src="assets/trio.webp" alt="Três cookies da Steele empilhados e mordidos, com o recheio à mostra" width="1000" height="1500" loading="lazy" decoding="async">
-    </figure>
     <div class="grupo-topo">
       <h2 id="h-artesanais">Cookies artesanais</h2>
       <p class="grupo-nota">Massa de sempre, gotas de chocolate de verdade. É por aqui que começa quem nunca provou.</p>
     </div>
     <ul class="lista">
     <li class="it it-destaque" data-id="trio-de-cookies" data-nome="Trio de cookies" data-preco="30">
+      <img class="it-foto it-foto-cheia" src="assets/sabores/trio.webp" alt="Três cookies da Steele empilhados e mordidos: tradicional com chocolate, massa de cacau e red velvet" width="264" height="264" loading="eager" decoding="async">
       <div class="it-txt">
         <p class="it-selo">Mais pedido &middot; entrega grátis</p>
         <h3>Trio de cookies</h3>
@@ -367,6 +362,7 @@ main{padding:0 var(--gut) clamp(50px,8vh,90px)}
       <div class="montador" id="montador" hidden></div>
     </li>
     <li class="it" data-id="tradicional" data-nome="Tradicional" data-preco="10">
+      <img class="it-foto it-foto-cheia" src="assets/sabores/tradicional.webp" alt="Cookie tradicional na mão, com gotas de chocolate à mostra" width="264" height="264" loading="lazy" decoding="async">
       <div class="it-txt">
         <h3>Tradicional</h3>
         <p>Massa amanteigada com gotas generosas. O ponto de referência da casa.</p>
@@ -381,6 +377,7 @@ main{padding:0 var(--gut) clamp(50px,8vh,90px)}
       </div>
     </li>
     <li class="it" data-id="chocolate-com-cafe" data-nome="Chocolate com café" data-preco="11">
+      <img class="it-foto it-foto-cheia" src="assets/sabores/cafe.webp" alt="Cookie de chocolate com café na mão, com pedaços de chocolate" width="264" height="264" loading="lazy" decoding="async">
       <div class="it-txt">
         <h3>Chocolate com café</h3>
         <p>Cacau meio amargo com café na massa. Menos doce, mais fundo.</p>
@@ -395,6 +392,7 @@ main{padding:0 var(--gut) clamp(50px,8vh,90px)}
       </div>
     </li>
     <li class="it" data-id="red-velvet" data-nome="Red velvet" data-preco="12">
+      <img class="it-foto it-foto-cheia" src="assets/sabores/redvelvet.webp" alt="Cookie red velvet na mão, com gotas de chocolate branco" width="264" height="264" loading="lazy" decoding="async">
       <div class="it-txt">
         <h3>Red velvet</h3>
         <p>Massa aveludada com chocolate branco. Doçura curta, cor inteira.</p>
@@ -412,15 +410,13 @@ main{padding:0 var(--gut) clamp(50px,8vh,90px)}
   </section>
 
   <section class="grupo" id="recheados" aria-labelledby="h-recheados">
-    <figure class="grupo-capa">
-      <img src="assets/grade.webp" alt="Cookies da Steele na grade, recém-saídos do forno" width="1200" height="1600" loading="lazy" decoding="async">
-    </figure>
     <div class="grupo-topo">
       <h2 id="h-recheados">Cookies recheados</h2>
       <p class="grupo-nota">A massa segura o recheio quente sem virar sobremesa de colher.</p>
     </div>
     <ul class="lista">
     <li class="it" data-id="black-nutella" data-nome="Black Nutella" data-preco="21">
+      <img class="it-foto" src="assets/sabores/nutella.webp" alt="Cookie black Nutella partido ao meio" width="264" height="264" loading="lazy" decoding="async">
       <div class="it-txt">
         <h3>Black Nutella</h3>
         <p>Massa de cacau preto, Nutella escorrendo no meio.</p>
@@ -435,6 +431,7 @@ main{padding:0 var(--gut) clamp(50px,8vh,90px)}
       </div>
     </li>
     <li class="it" data-id="brookie" data-nome="Brookie" data-preco="26">
+      <img class="it-foto" src="assets/sabores/brookie.webp" alt="Cookie brookie partido, com brownie dentro" width="264" height="264" loading="lazy" decoding="async">
       <div class="it-txt">
         <h3>Brookie</h3>
         <p>Cookie e brownie na mesma mordida. O recheio é brownie de verdade.</p>
@@ -452,15 +449,13 @@ main{padding:0 var(--gut) clamp(50px,8vh,90px)}
   </section>
 
   <section class="grupo" id="gourmets" aria-labelledby="h-gourmets">
-    <figure class="grupo-capa">
-      <img src="assets/cookie-real.webp" alt="Quatro metades de cookie empilhadas: Ferrero, Raffaello, Black oreo e Nutella" width="928" height="1200" loading="lazy" decoding="async">
-    </figure>
     <div class="grupo-topo">
       <h2 id="h-gourmets">Cookies gourmets</h2>
       <p class="grupo-nota">Os que levam bombom inteiro, coco fresco ou Oreo dentro da massa.</p>
     </div>
     <ul class="lista">
     <li class="it" data-id="black-oreo" data-nome="Black Oreo" data-preco="18">
+      <img class="it-foto" src="assets/sabores/oreo.webp" alt="Cookie black Oreo com biscoito por cima" width="264" height="264" loading="lazy" decoding="async">
       <div class="it-txt">
         <h3>Black Oreo</h3>
         <p>Cacau preto, creme e Oreo por dentro e por cima.</p>
@@ -475,6 +470,7 @@ main{padding:0 var(--gut) clamp(50px,8vh,90px)}
       </div>
     </li>
     <li class="it" data-id="raffaello" data-nome="Raffaello" data-preco="24">
+      <img class="it-foto" src="assets/sabores/raffaello.webp" alt="Cookie Raffaello partido, recheio de coco" width="264" height="264" loading="lazy" decoding="async">
       <div class="it-txt">
         <h3>Raffaello</h3>
         <p>Coco e chocolate branco na massa, com o bombom Raffaello inteiro no meio.</p>
@@ -489,6 +485,7 @@ main{padding:0 var(--gut) clamp(50px,8vh,90px)}
       </div>
     </li>
     <li class="it" data-id="ferrero-rocher" data-nome="Ferrero Rocher" data-preco="25">
+      <img class="it-foto" src="assets/sabores/ferrero.webp" alt="Cookie Ferrero Rocher com o bombom dentro" width="264" height="264" loading="lazy" decoding="async">
       <div class="it-txt">
         <h3>Ferrero Rocher</h3>
         <p>O bombom inteiro dentro da massa de chocolate, com avelã triturada.</p>
@@ -503,6 +500,7 @@ main{padding:0 var(--gut) clamp(50px,8vh,90px)}
       </div>
     </li>
     <li class="it" data-id="alpino-black" data-nome="Alpino Black" data-preco="29">
+      <img class="it-foto" src="assets/sabores/alpino.webp" alt="Cookie Alpino Black partido ao meio" width="264" height="264" loading="lazy" decoding="async">
       <div class="it-txt">
         <h3>Alpino Black</h3>
         <p>Massa black com gotas de chocolate branco e recheio cremoso.</p>
@@ -520,15 +518,13 @@ main{padding:0 var(--gut) clamp(50px,8vh,90px)}
   </section>
 
   <section class="grupo grupo-curto" id="cup" aria-labelledby="h-cup">
-    <figure class="grupo-capa">
-      <img src="assets/sabores/cupcookie.webp" alt="Copo da Steele cheio de mini cookies, com tampa de chocolate" width="264" height="264" loading="lazy" decoding="async">
-    </figure>
     <div class="grupo-topo">
       <h2 id="h-cup">CupCookies</h2>
       <p class="grupo-nota">Dez mini cookies no copo. Vai bem como presente.</p>
     </div>
     <ul class="lista">
-    <li class="it" data-id="tradicional-com-nutella" data-nome="Tradicional com Nutella" data-preco="37">
+    <li class="it it-com-foto" data-id="tradicional-com-nutella" data-nome="Tradicional com Nutella" data-preco="37">
+      <img class="it-foto it-foto-cheia" src="assets/sabores/cupcookie.webp" alt="Copo Steele Doces cheio de mini cookies, com tampa de chocolate" width="264" height="264" loading="lazy" decoding="async">
       <div class="it-txt"><h3>Tradicional com Nutella</h3><p>Dez mini cookies no copo, com a tampa recheada. Vai bem como presente.</p></div>
       <div class="it-dir">
         <span class="it-preco">R$ 37,00</span>
@@ -543,42 +539,14 @@ main{padding:0 var(--gut) clamp(50px,8vh,90px)}
   </section>
 
 
-  <section class="grupo grupo-curto" id="bolos" aria-labelledby="h-bolos">
-    <div class="grupo-topo">
-      <h2 id="h-bolos">Bolos por fatia</h2>
-      <p class="grupo-nota">Fatia generosa, cortada na hora. Chegando à loja &mdash; os sabores da
-        semana saem no WhatsApp enquanto a carta não fecha.</p>
-    </div>
-    <ul class="lista">
-    <li class="it it-breve">
-      <div class="it-txt"><h3>Cenoura com brigadeiro</h3><p>Massa de cenoura com cobertura de brigadeiro cremoso.</p></div>
-      <div class="it-dir"><span class="it-preco">Em breve</span></div>
-    </li>
-    <li class="it it-breve">
-      <div class="it-txt"><h3>Chocolate</h3><p>Massa de cacau com ganache por cima.</p></div>
-      <div class="it-dir"><span class="it-preco">Em breve</span></div>
-    </li>
-    <li class="it it-breve">
-      <div class="it-txt"><h3>Fubá cremoso</h3><p>Fubá com creme no meio, do jeito de casa.</p></div>
-      <div class="it-dir"><span class="it-preco">Em breve</span></div>
-    </li>
-    <li class="it it-breve">
-      <div class="it-txt"><h3>Red velvet</h3><p>A mesma massa aveludada do cookie, em fatia, com cream cheese.</p></div>
-      <div class="it-dir"><span class="it-preco">Em breve</span></div>
-    </li>
-    </ul>
-  </section>
-
   <section class="grupo grupo-curto" id="salgados" aria-labelledby="h-salgados">
-    <figure class="grupo-capa">
-      <img src="assets/sabores/biscoito-queijo.webp" alt="Três biscoitos de queijo assados, sobre o papel da marca Steele" width="264" height="264" loading="lazy" decoding="async">
-    </figure>
     <div class="grupo-topo">
       <h2 id="h-salgados">Salgados</h2>
       <p class="grupo-nota">Para quebrar o doce. Vão ao forno junto com os cookies.</p>
     </div>
     <ul class="lista">
-    <li class="it" data-id="trio-de-biscoitos-de-queijo" data-nome="Trio de biscoitos de queijo" data-preco="15">
+    <li class="it it-com-foto" data-id="trio-de-biscoitos-de-queijo" data-nome="Trio de biscoitos de queijo" data-preco="15">
+      <img class="it-foto it-foto-cheia" src="assets/sabores/biscoito-queijo.webp" alt="Três biscoitos de queijo assados, sobre o papel da marca Steele" width="264" height="264" loading="lazy" decoding="async">
       <div class="it-txt"><h3>Trio de biscoitos de queijo</h3><p>Assados na hora, quentinhos. Vêm do forno junto com os cookies.</p></div>
       <div class="it-dir">
         <span class="it-preco">R$ 15,00</span>
@@ -592,47 +560,9 @@ main{padding:0 var(--gut) clamp(50px,8vh,90px)}
     </ul>
   </section>
 
-  <section class="grupo grupo-curto" id="cafes" aria-labelledby="h-cafes">
-    <div class="grupo-topo">
-      <h2 id="h-cafes">Cafés</h2>
-      <p class="grupo-nota">Extraído na hora, para tomar aqui com o cookie ainda quente.
-        Chegando à loja &mdash; pergunte no WhatsApp o que já está saindo.</p>
-    </div>
-    <ul class="lista">
-    <li class="it it-breve">
-      <div class="it-txt"><h3>Espresso</h3><p>Curto, na xícara.</p></div>
-      <div class="it-dir"><span class="it-preco">Em breve</span></div>
-    </li>
-    <li class="it it-breve">
-      <div class="it-txt"><h3>Espresso duplo</h3><p>Dose dupla, para quem quer sentir.</p></div>
-      <div class="it-dir"><span class="it-preco">Em breve</span></div>
-    </li>
-    <li class="it it-breve">
-      <div class="it-txt"><h3>Café com leite</h3><p>O de todo dia, na xícara grande.</p></div>
-      <div class="it-dir"><span class="it-preco">Em breve</span></div>
-    </li>
-    <li class="it it-breve">
-      <div class="it-txt"><h3>Cappuccino</h3><p>Espresso, leite vaporizado e espuma, com canela ou cacau.</p></div>
-      <div class="it-dir"><span class="it-preco">Em breve</span></div>
-    </li>
-    <li class="it it-breve">
-      <div class="it-txt"><h3>Latte</h3><p>Mais leite que o cappuccino, mais cremoso.</p></div>
-      <div class="it-dir"><span class="it-preco">Em breve</span></div>
-    </li>
-    <li class="it it-breve">
-      <div class="it-txt"><h3>Mocha</h3><p>Espresso com leite e chocolate quente. A ponte com a vitrine.</p></div>
-      <div class="it-dir"><span class="it-preco">Em breve</span></div>
-    </li>
-    <li class="it it-breve">
-      <div class="it-txt"><h3>Chocolate quente</h3><p>Sem café, para quem veio pelo doce.</p></div>
-      <div class="it-dir"><span class="it-preco">Em breve</span></div>
-    </li>
-    </ul>
-  </section>
-
   <section class="grupo grupo-curto" id="bebidas" aria-labelledby="h-bebidas">
     <div class="grupo-topo">
-      <h2 id="h-bebidas">Bebidas geladas</h2>
+      <h2 id="h-bebidas">Bebidas</h2>
     </div>
     <ul class="lista">
     <li class="it it-simples" data-id="coca-cola-lata-350-ml" data-nome="Coca-Cola lata 350 ml" data-preco="8.9">

@@ -215,6 +215,56 @@ p{margin:0}
 .recheio-img img{width:min(100%,380px)}
 @media (max-width:900px){.recheio{grid-template-columns:1fr}.recheio-img{order:-1}}
 
+/* ---------- a cena do cafe ----------
+   Um trilho alto guarda um palco grudado na tela: enquanto o trilho passa, a
+   cena fica parada e so o progresso muda. As cinco variaveis abaixo sao
+   escritas pelo script; o CSS so sabe desenhar o quadro de cada valor. */
+.cafe-cena{background:var(--paper);--jato:0;--enche:0;--espuma:0;--cookie:0;--vapor:0}
+.cafe-trilho{position:relative;height:250vh}
+.cafe-palco{position:sticky;top:0;min-height:100svh;display:flex;align-items:center;
+  padding:clamp(40px,7vh,84px) var(--gut)}
+.cafe-grid{display:grid;grid-template-columns:1fr 1fr;gap:clamp(28px,5vw,76px);
+  align-items:center;width:100%;max-width:1220px;margin-inline:auto}
+.cafe-texto .h2{max-width:15ch}
+.cafe-passos{list-style:none;margin:clamp(22px,3vh,30px) 0 0;padding:0;
+  display:flex;flex-direction:column;gap:10px}
+.cafe-passos li{display:flex;gap:11px;color:var(--muted);font-size:.95rem;
+  opacity:.34;transition:opacity .45s var(--ease),color .45s var(--ease)}
+.cafe-passos li::before{content:"";width:5px;height:5px;border-radius:50%;
+  background:var(--line-2);flex:none;margin-top:.62em;transition:background .45s var(--ease)}
+.cafe-passos li.aceso{opacity:1;color:var(--ink)}
+.cafe-passos li.aceso::before{background:var(--gold)}
+
+.cafe-arte{position:relative;width:min(100%,440px);margin-inline:auto}
+.cafe-svg{width:100%;height:auto;display:block;overflow:visible}
+/* o jato desce do alto: cresce a partir da borda de cima, nao do meio */
+.cafe-jato{transform-origin:180px -60px;transform:scaleY(var(--jato))}
+/* o liquido comeca abaixo do fundo da xicara e sobe. a crema anda junto porque
+   mora no mesmo grupo, entao ela e sempre a superficie. */
+.cafe-liquido{transform:translateY(calc((1 - var(--enche)) * 126px))}
+.cafe-espuma{opacity:var(--espuma)}
+.cafe-vapor{opacity:var(--vapor);transform:translateY(calc((1 - var(--vapor)) * 10px))}
+.cafe-cookie{position:absolute;right:-4%;bottom:7%;width:35%;opacity:var(--cookie);
+  transform:translate(calc((1 - var(--cookie)) * 30px),calc((1 - var(--cookie)) * 18px))
+    rotate(calc((1 - var(--cookie)) * 7deg))}
+
+@media (max-width:900px){
+  .cafe-trilho{height:200vh}
+  .cafe-grid{grid-template-columns:1fr;gap:26px;text-align:center}
+  .cafe-arte{order:-1;width:min(74vw,300px)}
+  .cafe-texto .h2,.cafe-texto .lede{margin-inline:auto}
+  .cafe-passos{align-items:center}
+  .cafe-passos li{text-align:left;max-width:34ch}
+}
+/* sem rolagem controlando nada: a cena ja nasce no quadro final */
+@media (prefers-reduced-motion:reduce){
+  .cafe-cena{--jato:0;--enche:1;--espuma:1;--cookie:1;--vapor:1}
+  .cafe-trilho{height:auto}
+  .cafe-palco{position:static;min-height:0}
+  .cafe-passos li{opacity:1;color:var(--ink)}
+  .cafe-passos li::before{background:var(--gold)}
+}
+
 /* três provas */
 .provas{display:grid;grid-template-columns:repeat(3,1fr);gap:clamp(22px,3.4vw,56px);
   margin-top:clamp(34px,5vh,58px)}
@@ -452,6 +502,72 @@ p{margin:0}
     </div>
   </section>
 
+
+  <!-- O CAFÉ -->
+  <section class="cafe-cena" id="cafe" aria-labelledby="h-cafe">
+    <div class="cafe-trilho" id="cafe-trilho">
+      <div class="cafe-palco">
+        <div class="cafe-grid">
+          <div class="cafe-texto rv">
+            <p class="kicker">Para acompanhar</p>
+            <h2 class="h2" id="h-cafe">O cookie pede um café.</h2>
+            <p class="lede">A massa não é doce, então o café não precisa disputar com ela. Um
+              espresso curto corta o recheio; um cappuccino acompanha sem brigar.</p>
+            <ul class="cafe-passos" id="cafe-passos">
+              <li data-passo="0">O café desce ainda fumegando.</li>
+              <li data-passo="1">A xícara enche até a crema.</li>
+              <li data-passo="2">E o cookie senta do lado.</li>
+            </ul>
+          </div>
+
+          <div class="cafe-arte">
+            <svg class="cafe-svg" viewBox="0 0 360 440" role="img" aria-labelledby="cafe-svg-t">
+              <title id="cafe-svg-t">Uma xícara de cappuccino enchendo, com um cookie ao lado</title>
+              <defs>
+                <clipPath id="cafe-taca">
+                  <path d="M92,248 L268,248 C266,316 244,364 180,364 C116,364 94,316 92,248 Z"/>
+                </clipPath>
+              </defs>
+
+              <!-- o jato vem atras da xicara: ao passar da borda, some dentro dela -->
+              <rect class="cafe-jato" x="174" y="-60" width="12" height="310" rx="6" fill="#6A4A2A"/>
+
+              <ellipse cx="180" cy="392" rx="116" ry="19" fill="#FBF5EC" stroke="#4A5539" stroke-width="2.5"/>
+              <path d="M92,248 L268,248 C266,316 244,364 180,364 C116,364 94,316 92,248 Z" fill="#FBF5EC"/>
+
+              <g clip-path="url(#cafe-taca)">
+                <g class="cafe-liquido">
+                  <rect x="84" y="250" width="192" height="130" fill="#6A4A2A"/>
+                  <ellipse cx="180" cy="250" rx="94" ry="13" fill="#C9A227" opacity=".55"/>
+                  <g class="cafe-espuma">
+                    <ellipse cx="180" cy="249" rx="78" ry="10" fill="#F1E2C8"/>
+                    <ellipse cx="180" cy="248" rx="30" ry="4.5" fill="#FBF5EC" opacity=".85"/>
+                  </g>
+                </g>
+              </g>
+
+              <ellipse cx="180" cy="248" rx="88" ry="18" fill="none" stroke="#4A5539" stroke-width="2.5"/>
+              <path d="M92,248 C94,316 116,364 180,364 C244,364 266,316 268,248"
+                    fill="none" stroke="#4A5539" stroke-width="2.5" stroke-linecap="round"/>
+              <path d="M268,268 C312,262 326,296 310,318 C299,333 283,337 268,334"
+                    fill="none" stroke="#4A5539" stroke-width="2.5" stroke-linecap="round"/>
+
+              <g class="cafe-vapor" fill="none" stroke="#8F6727" stroke-width="2.4" stroke-linecap="round" opacity="0">
+                <path d="M150,214 C138,198 162,188 150,170"/>
+                <path d="M182,208 C170,190 194,178 182,158"/>
+                <path d="M214,214 C202,198 226,188 214,170"/>
+              </g>
+            </svg>
+
+            <img class="cafe-cookie" src="assets/sabores/nutella.webp"
+                 alt="Cookie Black Nutella partido, ao lado da xícara"
+                 width="528" height="528" loading="lazy" decoding="async">
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <!-- TRÊS PROVAS -->
   <section class="sec" aria-labelledby="h-provas">
     <div class="wrap">
@@ -581,6 +697,37 @@ p{margin:0}
   window.addEventListener('scroll', verBarra, {passive:true});
   window.addEventListener('resize', verBarra);
   verBarra();
+
+  /* a cena do cafe: o quanto do trilho ja passou vira cinco numeros de 0 a 1.
+     cada pedaco da cena acende na sua faixa, entao o jato termina antes de a
+     xicara encher e o cookie so chega no fim. */
+  var cena = document.getElementById("cafe");
+  var trilho = document.getElementById("cafe-trilho");
+  var passos = cena ? [].slice.call(cena.querySelectorAll(".cafe-passos li")) : [];
+  var paradinho = window.matchMedia("(prefers-reduced-motion:reduce)").matches;
+  if (cena && trilho && !paradinho){
+    var pedido = 0;
+    function faixa(p, a, b){ return Math.max(0, Math.min(1, (p - a) / (b - a))); }
+    function desenhar(){
+      pedido = 0;
+      var r = trilho.getBoundingClientRect();
+      var curso = r.height - window.innerHeight;
+      var p = curso <= 0 ? 1 : Math.max(0, Math.min(1, -r.top / curso));
+      var jato = faixa(p, .02, .46);
+      var enche = faixa(p, .28, .78);
+      cena.style.setProperty("--jato", p > .52 ? String(faixa(p, .70, .52)) : String(jato));
+      cena.style.setProperty("--enche", enche);
+      cena.style.setProperty("--espuma", faixa(p, .60, .84));
+      cena.style.setProperty("--cookie", faixa(p, .72, .96));
+      cena.style.setProperty("--vapor", faixa(p, .82, 1));
+      var aceso = p < .42 ? 0 : (p < .74 ? 1 : 2);
+      passos.forEach(function(li, i){ li.classList.toggle("aceso", i === aceso); });
+    }
+    function agendar(){ if (!pedido) pedido = requestAnimationFrame(desenhar); }
+    window.addEventListener("scroll", agendar, {passive:true});
+    window.addEventListener("resize", agendar);
+    desenhar();
+  }
 
   /* entradas suaves */
   var alvos = [].slice.call(document.querySelectorAll('.rv'));
